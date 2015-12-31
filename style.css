@@ -1,0 +1,58 @@
+body{
+    margin: .5in;
+    
+}
+
+#newPlayer{
+    width: 150px;
+    margin-left: 1em;
+    margin-right:1em;
+}
+
+#newPlayerDiv{
+    background-color: lightblue;
+    height: 6em;
+}
+
+#newPlayerForm{
+    padding: 2em;
+}
+
+#btnStartGame{
+    margin-left: 1in;
+}
+
+#newPlayerList{
+    font-size: 2em;
+    margin-left: 1in;
+    margin-top: .5in;
+}
+
+#gamePanel{
+    display: none;
+    font-size: 2em;
+    margin-left: 1in;
+    margin-top: .5in;
+    text-align: right;
+    width: 50%
+}
+
+.playerDiv{
+    padding: 1em;
+}
+
+.playerDollars{
+    margin-left: 5px;
+    width: 100px;
+    border: none;
+    background-color: white;
+}
+
+.buttonAddMoney, .buttonSubtractMoney, .buttonAdd200{
+    margin-left: 5px;
+}
+
+.dollarsAddSubtract{
+    width: 100px;
+    margin-right: 10px;
+}
