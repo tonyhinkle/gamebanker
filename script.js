@@ -98,7 +98,7 @@ $(document).ready(function ($) {
     });
     
     $(document).on("keyup", ".dollarsAddSubtract", function(){
-        if(parseInt($(lastInput).val())){
+        if($.isNumeric($(lastInput).val())){
            $(this).nextAll('button').slice(0,2).removeAttr('disabled');
         } else {
             $(this).nextAll('button').slice(0,2).attr('disabled', 'disabled');

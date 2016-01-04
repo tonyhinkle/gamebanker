@@ -98,5 +98,10 @@ td{
     vertical-align: top;
     padding-left: 15px;
     height: 400px;
-    overflow-y: scroll;   
+    overflow-y: scroll;
+    margin-right: -22px;
+}
+
+#activityLogCell{
+    overflow: hidden;
 }
