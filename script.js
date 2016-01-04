@@ -73,9 +73,9 @@ $(document).ready(function ($) {
                     startingAmount = $("#startingAmount").val();
                 }
                 
-                playerHtml += "<div class='playerDiv' data-playername='" + value.playerName + "'>" + value.playerName;
+                playerHtml += "<div class='playerDiv'><div class='playerName droppable' data-playername='" + value.playerName + "'>" + value.playerName + "</div>";
                 playerHtml += ": $<input class='playerDollars' disabled value='" + startingAmount + "'>";
-                playerHtml += "<input class='dollarsAddSubtract'><br>";
+                playerHtml += "<div class='draggable'><input class='dollarsAddSubtract'></div><br>";
                 playerHtml += "<button type='button' class='btn btn-xs buttonClear'>Clear</button>";
                 playerHtml += "<button type='button' class='btn btn-sm buttonAddMoney' disabled='disabled'>Add $</button>";
                 playerHtml += "<button type='button' class='btn btn-sm buttonSubtractMoney' disabled='disabled'>Subtract $</button>";
@@ -86,7 +86,42 @@ $(document).ready(function ($) {
             $("#playerPanel").html(playerHtml);
             $("#gamePanel").fadeIn(1000);
             $("#activityLog").html("Game started!")
-
+            
+            $(".draggable").draggable({
+                start: function (event, ui) {
+                    $(this).data('preventBehaviour', true);
+                },
+                revert : true
+            });
+            
+            $(".draggable").find(":input").on('mousedown', function (e) {
+                var mdown = new MouseEvent("mousedown", {
+                screenX: e.screenX,
+                screenY: e.screenY,
+                clientX: e.clientX,
+                clientY: e.clientY,
+                view: window
+            });
+    
+            $(this).closest('.draggable')[0].dispatchEvent(mdown);
+            }).on('click', function (e) {
+                var $draggable = $(this).closest('.draggable');
+                if ($draggable.data("preventBehaviour")) {
+                    e.preventDefault();
+                    $draggable.data("preventBehaviour", false)
+                }
+            });
+            
+            $( ".droppable" ).droppable({
+                drop: function( event, ui ) {
+                    var amount = parseInt(event.toElement.value);
+                    $(this).nextAll("input").val(parseInt($(this).nextAll("input").val()) + amount);
+                    console.log($(event.toElement).html());
+                    //$(event.toElement).prevAll("input").val(parseInt($(event.toElement).prevAll("input").val()) - amount);
+                    
+                    $(".dollarsAddSubtract").val("");
+                }
+            });
         });
     });
     

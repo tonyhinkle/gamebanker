@@ -1,5 +1,5 @@
 body{
-    margin: 5%
+    margin-top: .5in;
 }
 
 td{
@@ -35,7 +35,7 @@ td{
 
 #gamePanel{
     display: none;
-    margin-top: .5in;
+    margin-top: .25in;
     text-align: center;
     width: 100%
 }
@@ -106,4 +106,8 @@ td{
 
 #activityLogCell{
     overflow: hidden;
+}
+
+.draggable{
+  padding: 5px;
 }
