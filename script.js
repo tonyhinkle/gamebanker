@@ -3,6 +3,9 @@ $(document).ready(function ($) {
     var playerArray = new Array();
     $("#newPlayer").focus();
     
+    var lastInput = "";
+    
+    
     //Register the click event for the buttons to add and subtract money
     $(document).on("click", ".buttonAddMoney, .buttonSubtractMoney, .buttonAdd200", function(){
         
@@ -28,7 +31,7 @@ $(document).ready(function ($) {
         
         var newPlayer = new Object();
         newPlayer.playerName = $("#newPlayer").val();
-        newPlayer.dollars = 1650;
+        newPlayer.dollars = "0";
         playerArray.push(newPlayer);
         $("#newPlayer").val("")
         
@@ -36,7 +39,7 @@ $(document).ready(function ($) {
         
         $.each(playerArray, function( index, value ) {
             
-            newPlayerListHtml += value.playerName + ": $" + value.dollars + "<br>";
+            newPlayerListHtml += value.playerName + "<br>";
         });
         
         $("#newPlayerList").html(newPlayerListHtml);
@@ -52,14 +55,21 @@ $(document).ready(function ($) {
         newPlayer.dollars = 0;
         playerArray.push(newPlayer);
 
-        $("#newPlayerDiv, #newPlayerList").fadeOut(20, function(){
+        $("#newPlayerDiv, #newPlayerList").fadeOut(1000, function(){
             
-            var playerHtml = "" 
+            var playerHtml = "";
+            var startingAmount;
             
             $.each(playerArray, function( index, value ) {
-
+                
+                if(index == playerArray.length -1){
+                    startingAmount = 0;
+                }else{
+                    startingAmount = $("#startingAmount").val();
+                }
+                
                 playerHtml += "<div class='playerDiv'>" + value.playerName;
-                playerHtml += ": $<input class='playerDollars' disabled value='" + value.dollars + "'>";
+                playerHtml += ": $<input class='playerDollars' disabled value='" + startingAmount + "'>";
                 playerHtml += "<input class='dollarsAddSubtract'>";
                 playerHtml += "<button type='button' class='btn btn-xs buttonAddMoney'>Add $</button>";
                 playerHtml += "<button type='button' class='btn btn-xs buttonSubtractMoney'>Subtract $</button>";
@@ -67,9 +77,26 @@ $(document).ready(function ($) {
                 playerHtml += "</div>";
             });
             
-            $("#gamePanel").html(playerHtml);
-            $("#gamePanel").fadeIn(10);
+            $("#playerPanel").html(playerHtml);
+            $("#gamePanel").fadeIn(1000);
 
         });
     });
+    
+    $(document).on("focus", ".dollarsAddSubtract", function(){
+        
+        lastInput = this;
+        console.log(lastInput);
+    
+    });
+    
+    $(document).on("click", ".bill", function(){
+        console.log($(lastInput).val());
+        if(parseInt($(lastInput).val())){
+           $(lastInput).val(parseInt($(lastInput).val()) + parseInt($(this).data("bill")));
+        }else{
+            $(lastInput).val(parseInt($(this).data("bill")));
+        }
+    });
+
 })

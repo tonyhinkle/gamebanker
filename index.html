@@ -12,12 +12,35 @@
 
     <div id="newPlayerDiv">
         <form class="form-inline" id="newPlayerForm">
+            <div class="row">
+                <div class="col-md-6">
             <label for="newPlayer">Create Player: </label><input id="newPlayer" class="form-control" placeholder="Player Name">
             <button id="btnCreatePlayer" type="submit" class="btn btn-default">Create</button>
-            <button id="btnStartGame" type="button" class="btn">Start Game</button>
+                    </div>
+            <div class="col-md6">
+                <table><tr><td><label for="startingAmount">Starting Amount: </label>
+    </td><td><input id="startingAmount" class="form-control" value="1630">
+                    </td></tr><tr><td></td><td><button id="btnStartGame" type="button" class="btn ">Start Game</button>
+                    </td></tr></table>
+            </div></div>
         </form>
     </div>
     <div id="newPlayerList" class="help-block"></div>
     
-    <div class="help-block" id="gamePanel"></div>
+    <div id="gamePanel">
+        <table id="gameTable">
+            <tr>
+                <td class="help-block" id="playerPanel"></td>
+                <td id="currency">
+                    <div class="bill" data-bill="500">$500</div>
+                    <div class="bill" data-bill="100">$100</div>
+                    <div class="bill" data-bill="50">$50</div>
+                    <div class="bill" data-bill="20">$20</div>
+                    <div class="bill" data-bill="10">$10</div>
+                    <div class="bill" data-bill="5">$5</div>
+                    <div class="bill" data-bill="1">$1</div>
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
