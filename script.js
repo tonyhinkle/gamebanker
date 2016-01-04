@@ -30,6 +30,11 @@ $(document).ready(function ($) {
         $("#activityLog").prepend($(this).parent().data("playername") + ": " +operation + "$" + Math.abs(amountChange) + "<br>");
     });
     
+    $(document).on("click", ".buttonClear", function(){
+        $(this).prevAll(".dollarsAddSubtract").val("");
+        $(lastInput).keyup();
+    });
+
     $("#btnCreatePlayer").on("click", function(){
         var newPlayer = new Object();
         newPlayer.playerName = $("#newPlayer").val();
@@ -71,9 +76,10 @@ $(document).ready(function ($) {
                 playerHtml += "<div class='playerDiv' data-playername='" + value.playerName + "'>" + value.playerName;
                 playerHtml += ": $<input class='playerDollars' disabled value='" + startingAmount + "'>";
                 playerHtml += "<input class='dollarsAddSubtract'><br>";
-                playerHtml += "<button type='button' class='btn btn-xs buttonAddMoney' disabled='disabled'>Add $</button>";
-                playerHtml += "<button type='button' class='btn btn-xs buttonSubtractMoney' disabled='disabled'>Subtract $</button>";
-                playerHtml += "<button type='button' class='btn btn-xs buttonAdd200'>Add $200</button>";
+                playerHtml += "<button type='button' class='btn btn-xs buttonClear'>Clear</button>";
+                playerHtml += "<button type='button' class='btn btn-sm buttonAddMoney' disabled='disabled'>Add $</button>";
+                playerHtml += "<button type='button' class='btn btn-sm buttonSubtractMoney' disabled='disabled'>Subtract $</button>";
+                playerHtml += "<button type='button' class='btn btn-sm buttonAdd200'>Add $200</button>";
                 playerHtml += "</div>";
             });
             
@@ -99,9 +105,9 @@ $(document).ready(function ($) {
     
     $(document).on("keyup", ".dollarsAddSubtract", function(){
         if($.isNumeric($(lastInput).val())){
-           $(this).nextAll('button').slice(0,2).removeAttr('disabled');
+           $(this).nextAll('button').slice(1,3).removeAttr('disabled');
         } else {
-            $(this).nextAll('button').slice(0,2).attr('disabled', 'disabled');
+            $(this).nextAll('button').slice(1,3).attr('disabled', 'disabled');
         }
     });
 })
