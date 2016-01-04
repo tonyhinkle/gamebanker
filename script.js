@@ -15,7 +15,7 @@ $(document).ready(function ($) {
             amountChange = 200;
         }
         else{
-            amountChange = parseInt($(this).prevAll(".dollarsAddSubtract").val());
+            amountChange = parseInt($(this).prevAll(".draggable").children(".dollarsAddSubtract").val());
         }
         
         if ($(this).hasClass("buttonSubtractMoney")){
@@ -24,14 +24,14 @@ $(document).ready(function ($) {
         }
         
         playerAmount.val(parseInt(playerAmount.val()) + parseInt(amountChange));
-        $(this).prevAll(".dollarsAddSubtract").val("");
+        $(this).prevAll(".draggable").children(".dollarsAddSubtract").val("");
         
         $(lastInput).keyup();
-        $("#activityLog").prepend($(this).parent().data("playername") + ": " +operation + "$" + Math.abs(amountChange) + "<br>");
+        $("#activityLog").prepend($(this).parent().children(".playerName").data("playername") + ": " +operation + "$" + Math.abs(amountChange) + "<br>");
     });
     
     $(document).on("click", ".buttonClear", function(){
-        $(this).prevAll(".dollarsAddSubtract").val("");
+        $(this).prevAll(".draggable").children(".dollarsAddSubtract").val("");
         $(lastInput).keyup();
     });
 
@@ -114,13 +114,18 @@ $(document).ready(function ($) {
             
             $( ".droppable" ).droppable({
                 drop: function( event, ui ) {
-                    var amount = parseInt(event.toElement.value);
                 
-                    $(this).nextAll("input").val(parseInt($(this).nextAll("input").val()) + amount);
-                    $(ui.draggable).prev().val(parseInt($(ui.draggable).prev().val()) - amount);
+                    var amount = parseInt(event.toElement.value);
                     
-                    $("#activityLog").prepend("$" + amount + " from " + $(ui.draggable).prevAll('.playerName').data("playername") + " to " + $(this).data("playername") + "<br>");
-                    $(".dollarsAddSubtract").val("");
+                    if($.isNumeric(amount)){
+                
+                        $(this).nextAll("input").val(parseInt($(this).nextAll("input").val()) + amount);
+                        $(ui.draggable).prev().val(parseInt($(ui.draggable).prev().val()) - amount);
+                    
+                        $("#activityLog").prepend("$" + amount + " from " + $(ui.draggable).prevAll('.playerName').data("playername") + " to " + $(this).data("playername") + "<br>");
+                        $(".dollarsAddSubtract").val("");
+                        $(lastInput).keyup();
+                    }
                 }
             });
         });
@@ -141,9 +146,9 @@ $(document).ready(function ($) {
     
     $(document).on("keyup", ".dollarsAddSubtract", function(){
         if($.isNumeric($(lastInput).val())){
-           $(this).nextAll('button').slice(1,3).removeAttr('disabled');
+           $(this).parent().nextAll('button').slice(1,3).removeAttr('disabled');
         } else {
-            $(this).nextAll('button').slice(1,3).attr('disabled', 'disabled');
+            $(this).parent().nextAll('button').slice(1,3).attr('disabled', 'disabled');
         }
     });
 })
