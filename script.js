@@ -115,10 +115,11 @@ $(document).ready(function ($) {
             $( ".droppable" ).droppable({
                 drop: function( event, ui ) {
                     var amount = parseInt(event.toElement.value);
+                
                     $(this).nextAll("input").val(parseInt($(this).nextAll("input").val()) + amount);
-                    console.log($(event.toElement).html());
-                    //$(event.toElement).prevAll("input").val(parseInt($(event.toElement).prevAll("input").val()) - amount);
+                    $(ui.draggable).prev().val(parseInt($(ui.draggable).prev().val()) - amount);
                     
+                    $("#activityLog").prepend("$" + amount + " from " + $(ui.draggable).prevAll('.playerName').data("playername") + " to " + $(this).data("playername") + "<br>");
                     $(".dollarsAddSubtract").val("");
                 }
             });

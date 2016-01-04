@@ -108,6 +108,7 @@ td{
     overflow: hidden;
 }
 
-.draggable{
-  padding: 5px;
+.draggable, .droppable{
+    padding: 5px;
+    display: inline;
 }
