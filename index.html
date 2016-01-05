@@ -13,17 +13,11 @@
 
     <div id="newPlayerDiv">
         <form class="form-inline" id="newPlayerForm">
-            <div class="row">
-                <div class="col-md-6">
             <label for="newPlayer">Create Player: </label><input id="newPlayer" class="form-control" placeholder="Player Name">
             <button id="btnCreatePlayer" type="submit" class="btn btn-default">Create</button>
-                    </div>
-            <div class="col-md6">
-                <table><tr><td><label for="startingAmount">Starting Amount: </label>
-    </td><td><input id="startingAmount" class="form-control" value="1630">
-                    </td></tr><tr><td></td><td><button id="btnStartGame" type="button" class="btn ">Start Game</button>
-                    </td></tr></table>
-            </div></div>
+            <label id="startingAmountLabel" class="startGameElement" for="startingAmount">Starting Amount: </label>
+            <input id="startingAmount" disabled class="form-control startGameElement" value="1630">
+            <button id="btnStartGame" disabled type="button" class="btn StartGameElement">Start Game</button>
         </form>
     </div>
     <div id="newPlayerList" class="help-block"></div>

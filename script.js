@@ -33,7 +33,7 @@ $(document).ready(function ($) {
         $(this).prevAll(".draggable").children(".dollarsAddSubtract").val("");
         
         $(lastInput).keyup();
-        $("#activityLog").prepend($(this).parent().children(".playerName").data("playername") + ": " +operation + "$" + Math.abs(amountChange) + "<br>");
+        $("#activityLog").prepend($(this).parent().children(".playerName").data("playername") + ": " + operation + "$" + Math.abs(amountChange) + "<br>");
     });
     
     $(document).on("click", ".buttonClear", function(){
@@ -56,13 +56,18 @@ $(document).ready(function ($) {
         
         $("#newPlayerList").html(newPlayerListHtml);
         
+        if(playerArray.length > 1){
+            $(".startGameElement").css("opacity", "1");
+            $("#btnStartGame, #startingAmount").removeAttr("disabled");
+        }
+        
         return false;
     });
     
     $("#btnStartGame").on("click", function(){
         //Create the Success Club player to track money in the middle
         var newPlayer = new Object();
-        newPlayer.playerName = "Success Club";
+        newPlayer.playerName = "Board";
         newPlayer.dollars = 0;
         playerArray.push(newPlayer);
 
@@ -81,7 +86,8 @@ $(document).ready(function ($) {
                 
                 playerHtml += "<div class='playerDiv'><div class='playerName droppable' data-playername='" + value.playerName + "'>" + value.playerName + "</div>";
                 playerHtml += ": $<input class='playerDollars' disabled value='" + startingAmount + "'>";
-                playerHtml += "<div class='draggable'><input class='dollarsAddSubtract' data-toggle='tooltip' title='Drag to another player&#39;s name to transfer money.'></div><br>";
+                playerHtml += "<div class='draggable'><input class='dollarsAddSubtract' data-toggle='tooltip' "
+                playerHtml += "title='Drag to another player&#39;s name to transfer money.'></div><br>";
                 playerHtml += "<button type='button' class='btn btn-xs buttonClear'>Clear</button>";
                 playerHtml += "<button type='button' class='btn btn-sm buttonAddMoney' disabled='disabled'>Add $</button>";
                 playerHtml += "<button type='button' class='btn btn-sm buttonSubtractMoney' disabled='disabled'>Subtract $</button>";
