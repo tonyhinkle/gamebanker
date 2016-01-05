@@ -42,6 +42,13 @@ $(document).ready(function ($) {
     });
 
     $("#btnCreatePlayer").on("click", function(){
+        
+        if($("#newPlayer").val() == ""){
+            $("#btnCreatePlayer").attr("disabled", "disabled");
+            $("#newPlayer").tooltip("show");
+            return
+        }
+        
         var newPlayer = new Object();
         newPlayer.playerName = $("#newPlayer").val();
         newPlayer.dollars = "0";
@@ -180,7 +187,12 @@ $(document).ready(function ($) {
     
     $("#newPlayer").on("keyup", function(){
         if($("#newPlayer").val() != ""){
-            $("#btnCreatePlayer").removeAttr("disabled");
+            if(lookup(playerArray, "playerName", $("#newPlayer").val())){
+                $("#btnCreatePlayer").attr("disabled", "disabled");
+                $("#newPlayer").tooltip("show");
+            } else {
+                $("#btnCreatePlayer").removeAttr("disabled");
+            }
         }else{
             $("#btnCreatePlayer").attr("disabled", "disabled");
         }
@@ -203,3 +215,9 @@ $(document).ready(function ($) {
         $("#btnDisableTooltips").hide();
     });
 })
+
+function lookup(array, prop, value) {
+    console.log
+    for (var i = 0, len = array.length; i < len; i++)
+        if (array[i][prop] === value) return array[i];
+}
