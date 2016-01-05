@@ -3,6 +3,12 @@ $(document).ready(function ($) {
     var playerArray = new Array();
     $("#newPlayer").focus();
     
+    $('body').tooltip({
+        selector: '[data-toggle=tooltip]',
+        placement: 'auto',
+        trigger: 'hover'
+    });
+    
     var lastInput = "";
     
     //Register the click event for the buttons to add and subtract money
@@ -75,7 +81,7 @@ $(document).ready(function ($) {
                 
                 playerHtml += "<div class='playerDiv'><div class='playerName droppable' data-playername='" + value.playerName + "'>" + value.playerName + "</div>";
                 playerHtml += ": $<input class='playerDollars' disabled value='" + startingAmount + "'>";
-                playerHtml += "<div class='draggable'><input class='dollarsAddSubtract'></div><br>";
+                playerHtml += "<div class='draggable'><input class='dollarsAddSubtract' data-toggle='tooltip' title='Drag to another player&#39;s name to transfer money.'></div><br>";
                 playerHtml += "<button type='button' class='btn btn-xs buttonClear'>Clear</button>";
                 playerHtml += "<button type='button' class='btn btn-sm buttonAddMoney' disabled='disabled'>Add $</button>";
                 playerHtml += "<button type='button' class='btn btn-sm buttonSubtractMoney' disabled='disabled'>Subtract $</button>";
@@ -150,5 +156,9 @@ $(document).ready(function ($) {
         } else {
             $(this).parent().nextAll('button').slice(1,3).attr('disabled', 'disabled');
         }
+    });
+    $(document).on("mouseout", ".dollarsAddSubtract", function(){
+        $('.tooltip').hide();
+        console.log('hi')
     });
 })

@@ -4,6 +4,7 @@ body{
 
 td{
     color: #888888;
+    vertical-align: top;
 }
 
 #newPlayer{
@@ -35,7 +36,6 @@ td{
 
 #gamePanel{
     display: none;
-    margin-top: .25in;
     text-align: center;
     width: 100%
 }
@@ -46,12 +46,13 @@ td{
 }
 
 .playerDiv{
-    padding: .75em;
+    padding-bottom: .75em;
+    padding-right: .75em;
     font-size: 2em;
 }
 
 .playerDollars{
-    width: 100px;
+    width: 90px;
     border: none;
     background-color: white;
 }
@@ -76,7 +77,8 @@ td{
     text-align: center;
     background-color: lightgreen;
     padding: 10px;
-    margin: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
     cursor: pointer;
     width: 100px;
     border-radius: 10px;
@@ -111,4 +113,26 @@ td{
 .draggable, .droppable{
     padding: 5px;
     display: inline;
+}
+
+.tooltip > .tooltip-inner{
+    padding: 10px;
+    background-color: lightblue;
+    color: #444444;
+}
+
+.tooltip.top > .tooltip-arrow {
+    border-top: 5px solid lightblue;
+}
+
+.tooltip.bottom > .tooltip-arrow {
+    border-bottom: 5px solid lightblue;
+}
+
+.tooltip.right > .tooltip-arrow {
+    border-right: 5px solid lightblue;
+}
+
+.tooltip.left > .tooltip-arrow {
+    border-left: 5px solid lightblue;
 }
