@@ -20,7 +20,7 @@ td{
 }
 
 #newPlayerDiv{
-    background-color: lightblue;
+    background-color: #54A759;
     height: 7em;
     text-align: center;
 }
@@ -120,24 +120,25 @@ td{
 
 .tooltip > .tooltip-inner{
     padding: 10px;
-    background-color: lightblue;
-    color: #444444;
+    background-color: #86C98A;
+    color: #333333;
+    font-weight: bold;
 }
 
 .tooltip.top > .tooltip-arrow {
-    border-top: 5px solid lightblue;
+    border-top: 5px solid #86C98A;
 }
 
 .tooltip.bottom > .tooltip-arrow {
-    border-bottom: 5px solid lightblue;
+    border-bottom: 5px solid #86C98A;
 }
 
 .tooltip.right > .tooltip-arrow {
-    border-right: 5px solid lightblue;
+    border-right: 5px solid #86C98A;
 }
 
 .tooltip.left > .tooltip-arrow {
-    border-left: 5px solid lightblue;
+    border-left: 5px solid #86C98A;
 }
 
 #startingAmountLabel{
@@ -145,5 +146,10 @@ td{
 }
 
 .startGameElement, #btnStartGame, #startingAmount{
-    opacity: .00;
+    opacity: 0;
+}
+
+#uiConfig{
+    text-align: right;
+    margin-top: 5px;
 }

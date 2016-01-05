@@ -59,12 +59,23 @@ $(document).ready(function ($) {
         if(playerArray.length > 1){
             $(".startGameElement").css("opacity", "1");
             $("#btnStartGame, #startingAmount").removeAttr("disabled");
+            $("#startingAmount").tooltip("enable");
         }
+        
+        $("#btnCreatePlayer").attr("disabled", "disabled");
         
         return false;
     });
     
     $("#btnStartGame").on("click", function(){
+        
+        if(!$.isNumeric($("#startingAmount").val())){
+            $("#startingAmount").tooltip("show");
+            $("#btnStartGame").attr("disabled", "disabled");
+            $("#btnStartGame").css("opacity", ".5")
+            return;
+        }
+        
         //Create the Success Club player to track money in the middle
         var newPlayer = new Object();
         newPlayer.playerName = "Board";
@@ -165,6 +176,30 @@ $(document).ready(function ($) {
     });
     $(document).on("mouseout", ".dollarsAddSubtract", function(){
         $('.tooltip').hide();
-        console.log('hi')
+    });
+    
+    $("#newPlayer").on("keyup", function(){
+        if($("#newPlayer").val() != ""){
+            $("#btnCreatePlayer").removeAttr("disabled");
+        }else{
+            $("#btnCreatePlayer").attr("disabled", "disabled");
+        }
+    });
+    
+    $("#startingAmount").on("keyup", function(){
+        if($.isNumeric($("#startingAmount").val())){
+            $("#btnStartGame").removeAttr("disabled");
+            $("#btnStartGame").css("opacity", "1")
+        }else{
+            $("#btnStartGame").attr("disabled", "disabled");
+            $("#btnStartGame").css("opacity", ".5")
+        }
+    });
+    
+    $("#startingAmount").tooltip("disable");
+    
+    $("#btnDisableTooltips").on("click", function(){
+        $('[data-toggle=tooltip]').tooltip("disable");
+        $("#btnDisableTooltips").hide();
     });
 })
