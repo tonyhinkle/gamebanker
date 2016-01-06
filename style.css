@@ -107,6 +107,7 @@ td{
     line-height: 1.5em;
     border: solid 1px #cccccc;
     border-radius: 10px;
+    margin-left: 25px;
 }
 
 #activityLogCell{
