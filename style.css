@@ -1,5 +1,6 @@
 body{
     margin-top: .5in;
+    background-color: #FAFAFA;
 }
 
 td{
@@ -56,7 +57,7 @@ td{
 .playerDollars{
     width: 90px;
     border: none;
-    background-color: white;
+    background-color: #FAFAFA;
 }
 
 .buttonAddMoney, .buttonSubtractMoney, .buttonAdd200{
@@ -77,7 +78,7 @@ td{
 
 .bill{
     text-align: center;
-    background-color: lightgreen;
+    background-color: 54A759;
     padding: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
@@ -85,7 +86,7 @@ td{
     width: 100px;
     border-radius: 10px;
     font-size: 1.5em;
-    color: darkgreen;
+    color: white;
 }
 
 #gameTable{
@@ -152,4 +153,12 @@ td{
 #uiConfig{
     text-align: right;
     margin-top: 5px;
+}
+
+.colorRed{
+    color: red;
+}
+
+.colorGreen{
+    color: green;
 }

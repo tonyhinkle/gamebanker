@@ -1,6 +1,10 @@
 $(document).ready(function ($) {
     
     var playerArray = new Array();
+    var spanGreenOpenTag = "<span class='colorGreen'>";
+    var spanRedOpenTag = "<span class='colorRed'>";
+    var spanCloseTag = "</span>";
+
     $("#newPlayer").focus();
     
     $('body').tooltip({
@@ -16,6 +20,7 @@ $(document).ready(function ($) {
         var playerAmount = $(this).prevAll(".playerDollars");
         var amountChange;
         var operation = "+";
+        var opColorOpenTag = spanGreenOpenTag;
         
         if ($(this).hasClass("buttonAdd200")){
             amountChange = 200;
@@ -26,14 +31,15 @@ $(document).ready(function ($) {
         
         if ($(this).hasClass("buttonSubtractMoney")){
             amountChange = -amountChange
-             operation = "-";
+            operation = "-";
+            opColorOpenTag = spanRedOpenTag;
         }
         
         playerAmount.val(parseInt(playerAmount.val()) + parseInt(amountChange));
         $(this).prevAll(".draggable").children(".dollarsAddSubtract").val("");
         
         $(lastInput).keyup();
-        $("#activityLog").prepend($(this).parent().children(".playerName").data("playername") + ": " + operation + "$" + Math.abs(amountChange) + "<br>");
+        $("#activityLog").prepend($(this).parent().children(".playerName").data("playername") + ": " + opColorOpenTag + operation + "$" + Math.abs(amountChange) + spanCloseTag + "<br>");
     });
     
     $(document).on("click", ".buttonClear", function(){
@@ -152,7 +158,7 @@ $(document).ready(function ($) {
                         $(this).nextAll("input").val(parseInt($(this).nextAll("input").val()) + amount);
                         $(ui.draggable).prev().val(parseInt($(ui.draggable).prev().val()) - amount);
                     
-                        $("#activityLog").prepend("$" + amount + " from " + $(ui.draggable).prevAll('.playerName').data("playername") + " to " + $(this).data("playername") + "<br>");
+                        $("#activityLog").prepend("$" + amount + " from " + spanRedOpenTag + $(ui.draggable).prevAll('.playerName').data("playername") + spanCloseTag + " to " + spanGreenOpenTag + $(this).data("playername") + spanCloseTag + "<br>");
                         $(".dollarsAddSubtract").val("");
                         $(lastInput).keyup();
                     }
