@@ -69,8 +69,10 @@ $(document).ready(function ($) {
         
         $("#newPlayerList").html(newPlayerListHtml);
         
-        if(playerArray.length > 1){
+        if(playerArray.length == 2){
             $(".startGameElement").css("opacity", "1");
+            $(".startGameElement").hide();
+            $(".startGameElement").fadeIn(1000);
             $("#btnStartGame, #startingAmount").removeAttr("disabled");
             $("#startingAmount").tooltip("enable");
         }
