@@ -49,12 +49,15 @@ $(document).ready(function ($) {
 
     $("#btnCreatePlayer").on("click", function(){
         
+        //If the user deleted the data in #newPlayer before clicking the button,
+        //show the #newPlayer tooltip and return
         if($("#newPlayer").val() == ""){
             $("#btnCreatePlayer").attr("disabled", "disabled");
             $("#newPlayer").tooltip("show");
             return
         }
         
+        //Create the new player object
         var newPlayer = new Object();
         newPlayer.playerName = $("#newPlayer").val();
         newPlayer.dollars = "0";
