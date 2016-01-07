@@ -207,7 +207,6 @@ $(document).ready(function ($) {
                         $(event.toElement).val("");
                         
                         //Trigger the keyup handler on lastInput to disable Add $ and Subtract $ buttons
-                        //TODO: test to make sure this works in all scenarios
                         $(lastInput).keyup();
                     }
                 }
