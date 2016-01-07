@@ -78,7 +78,7 @@ td{
 
 .bill{
     text-align: center;
-    background-color: 54A759;
+    background-color: #54A759;
     padding: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
@@ -162,4 +162,14 @@ td{
 
 .colorGreen{
     color: green;
+}
+
+.fa-chevron-left{
+    font-size: 12px;
+    color: #54A759;
+    vertical-align: middle;
+}
+
+.fa {
+    width: 2px;
 }
