@@ -288,6 +288,7 @@ $(document).ready(function ($) {
     });
 })
 
+//This function checks a given property of objects in an array to find a match for a given value
 function lookup(array, prop, value) {
     console.log
     for (var i = 0, len = array.length; i < len; i++)
