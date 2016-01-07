@@ -46,6 +46,9 @@ $(document).ready(function ($) {
         playerAmount.val(parseInt(playerAmount.val()) + parseInt(amountChange));
         $(this).prevAll(".draggable").children(".dollarsAddSubtract").val("");
         
+        //Set lastInput to the input that was used for this action
+        lastInput = $(this).prevAll(".draggable").children(".dollarsAddSubtract");
+        
         //Trigger the keyup handler on lastInput so that it will disable the Add $ and Subtract $ buttons
         $(lastInput).keyup();
         
@@ -59,7 +62,7 @@ $(document).ready(function ($) {
         $(this).prevAll(".draggable").children(".dollarsAddSubtract").val("");
         
         //Trigger the keyup handler on lastInput so that it will disable the Add $ and Subtract $ buttons
-        //TODO: This needs to be changed as the text input that was cleared may not be lastInput
+        lastInput = $(this).prevAll(".draggable").children(".dollarsAddSubtract");
         $(lastInput).keyup();
     });
 
@@ -200,7 +203,8 @@ $(document).ready(function ($) {
                     
                         //Log the action and clear all .dollarsAddSubtract elements
                         $("#activityLog").prepend("$" + amount + " from " + spanRedOpenTag + $(ui.draggable).prevAll('.playerName').data("playername") + spanCloseTag + " to " + spanGreenOpenTag + $(this).data("playername") + spanCloseTag + "<br>");
-                        $(".dollarsAddSubtract").val("");
+                        //$(".dollarsAddSubtract").val("");
+                        $(event.toElement).val("");
                         
                         //Trigger the keyup handler on lastInput to disable Add $ and Subtract $ buttons
                         //TODO: test to make sure this works in all scenarios
