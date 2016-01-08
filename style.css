@@ -166,10 +166,15 @@ td{
 
 .fa-chevron-left{
     font-size: 12px;
-    color: #54A759;
     vertical-align: middle;
+    width: 20px;
 }
 
-.fa {
-    width: 2px;
+.inactiveChevron{
+    color: lightgray;
+    cursor: pointer;
+}
+
+.activeChevron{
+    color: #54A759;
 }

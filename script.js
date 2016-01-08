@@ -145,7 +145,7 @@ $(document).ready(function ($) {
                 playerHtml += ": $<input class='playerDollars' disabled value='" + startingAmount + "'>";
                 playerHtml += "<div class='draggable'><input class='dollarsAddSubtract' data-toggle='tooltip' "
                 playerHtml += "title='Drag to another player&#39;s name to transfer money.'></div>";
-                playerHtml += "<span class='fa'></span> <br>"
+                playerHtml += "<span class='fa fa-chevron-left inactiveChevron'></span> <br>"
                 playerHtml += "<button type='button' class='btn btn-xs buttonClear'>Clear</button>";
                 playerHtml += "<button type='button' class='btn btn-sm buttonAddMoney' disabled='disabled'>Add $</button>";
                 playerHtml += "<button type='button' class='btn btn-sm buttonSubtractMoney' disabled='disabled'>Subtract $</button>";
@@ -218,8 +218,8 @@ $(document).ready(function ($) {
     //Register the focus event for .dollarsAddSubtract to set lastInput to the element that most recently had focus
     //This is done (primarily) so that the click handler for .bill DIVs knows where to add values
     $(document).on("focus", ".dollarsAddSubtract", function(){
-        $(".fa-chevron-left").removeClass("fa-chevron-left");
-        $(this).parent().next("span").addClass("fa-chevron-left");
+        $(".activeChevron").removeClass("activeChevron").addClass("inactiveChevron");
+        $(this).parent().next("span").addClass("activeChevron").removeClass("inactiveChevron");
         lastInput = this;
     });
     
@@ -246,9 +246,8 @@ $(document).ready(function ($) {
             //If the element does not contain a valid number, disable the Add $ and Subtract $ buttons
             $(this).parent().nextAll('button').slice(1,3).attr('disabled', 'disabled');
         }
-        console.log($("fa-chevron-left").length);
-        $(".fa-chevron-left").removeClass("fa-chevron-left");
-        $(lastInput).parent().next("span").addClass("fa-chevron-left");
+        $(".activeChevron").removeClass("activeChevron").addClass("inactiveChevron");
+        $(lastInput).parent().next("span").addClass("activeChevron").removeClass("inactiveChevron");
     });
     
     //Register the mouseout handler for .dollarsAddSubtract to hide it's tooltip.  This typically would be necessary, 
@@ -294,6 +293,15 @@ $(document).ready(function ($) {
     $("#btnDisableTooltips").on("click", function(){
         $('[data-toggle=tooltip]').tooltip("disable");
         $("#btnDisableTooltips").hide();
+    });
+    
+    //Register the click event for the inactive lastInput chevron indicators
+    $("body").on("click", ".inactiveChevron", function() {
+        
+        lastInput = $(this).prev("div").children("input");
+        $(".activeChevron").removeClass("activeChevron").addClass("inactiveChevron");
+        $(lastInput).parent().next("span").addClass("activeChevron").removeClass("inactiveChevron");
+
     });
 })
 
