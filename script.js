@@ -18,52 +18,47 @@ $(document).ready(function ($) {
     });
     
     //Register the click event for the buttons to add and subtract money
-    $(document).on("click", ".buttonAddMoney, .buttonSubtractMoney, .buttonAdd200", function(){
+    $(document).on("click", "#buttonAddMoney, #buttonSubtractMoney, #buttonAdd200", function(){
+        
+        if(!lastInput){return;}
         
         //Get the player's current amount of money, and initialize some other variables
-        var playerAmount = $(this).prevAll(".playerDollars");
+        var playerAmount = $(lastInput).parent().prevAll(".playerDollars");
         var amountChange;
         var operation = "+";
         var opColorOpenTag = spanGreenOpenTag;
 
         //If an "Add $200" button was clicked, set amountChanged to 200
-        if ($(this).hasClass("buttonAdd200")){
+        if ($(this).attr("id") == "buttonAdd200"){
             amountChange = 200;
         }
         else{
+            
+            if(!$.isNumeric($(lastInput).val())){return;}
+            
             //If an Add $ or Subtract $ button was clicked, set amountChanged to the appropriate input value
-            amountChange = parseInt($(this).prevAll(".draggable").children(".dollarsAddSubtract").val());
+            amountChange = parseInt($(lastInput).val());
             
             //If Subtract $ was clicked, change it to a negative number and change some other variables
-            if ($(this).hasClass("buttonSubtractMoney")){
+            if ($(this).attr("id") == "buttonSubtractMoney"){
                 amountChange = -amountChange
                 operation = "-";
                 opColorOpenTag = spanRedOpenTag;
             }
         }
         
-        //Add amountChange to the player's current amount of $, and clear all of the .dollarsAddSubtract inputs
+        //Add amountChange to the player's current amount of $, and clear the input
         playerAmount.val(parseInt(playerAmount.val()) + parseInt(amountChange));
-        $(this).prevAll(".draggable").children(".dollarsAddSubtract").val("");
-        
-        //Set lastInput to the input that was used for this action
-        lastInput = $(this).prevAll(".draggable").children(".dollarsAddSubtract");
-        
-        //Trigger the keyup handler on lastInput so that it will disable the Add $ and Subtract $ buttons
-        $(lastInput).keyup();
+        $(lastInput).val("");
         
         //Add the transaction to the activity log
-        $("#activityLog").prepend($(this).parent().children(".playerName").data("playername") + ": " + opColorOpenTag + operation + "$" + Math.abs(amountChange) + spanCloseTag + "<br>");
+        $("#activityLog").prepend($(lastInput).parent().prevAll(".playerName").data("playername") + ": " + opColorOpenTag + operation + "$" + Math.abs(amountChange) + spanCloseTag + "<br>");
     });
     
     //Register the click event for the "Clear" buttons
-    $(document).on("click", ".buttonClear", function(){
-        //Clear the appropriate text input        
-        $(this).prevAll(".draggable").children(".dollarsAddSubtract").val("");
-        
-        //Trigger the keyup handler on lastInput so that it will disable the Add $ and Subtract $ buttons
-        lastInput = $(this).prevAll(".draggable").children(".dollarsAddSubtract");
-        $(lastInput).keyup();
+    $(document).on("click", "#buttonClear", function(){
+        //Clear the current text input        
+        $(lastInput).val("");
     });
 
     $("#btnCreatePlayer").on("click", function(){
@@ -131,6 +126,11 @@ $(document).ready(function ($) {
             //Set startingAmount to the value of #startingAmount and initialize other variables
             var startingAmount = $("#startingAmount").val();
             var playerHtml = "";
+                playerHtml += "<button type='button' id='buttonClear' class='btn btn-sm'>Clear</button>";
+                playerHtml += "<button type='button' id='buttonAddMoney' class='btn btn-sm'>Add $</button>";
+                playerHtml += "<button type='button' id='buttonSubtractMoney' class='btn btn-sm'>Subtract $</button>";
+                playerHtml += "<button type='button' id='buttonAdd200' class='btn btn-sm'>Add $200</button>";
+
             
             //Iterate through each player object in playerArray
             $.each(playerArray, function( index, value ) {
@@ -146,10 +146,6 @@ $(document).ready(function ($) {
                 playerHtml += "<div class='draggable'><input class='dollarsAddSubtract' data-toggle='tooltip' "
                 playerHtml += "title='Drag to another player&#39;s name to transfer money.'></div>";
                 playerHtml += "<span class='fa fa-chevron-left inactiveChevron'></span> <br>"
-                playerHtml += "<button type='button' class='btn btn-xs buttonClear'>Clear</button>";
-                playerHtml += "<button type='button' class='btn btn-sm buttonAddMoney' disabled='disabled'>Add $</button>";
-                playerHtml += "<button type='button' class='btn btn-sm buttonSubtractMoney' disabled='disabled'>Subtract $</button>";
-                playerHtml += "<button type='button' class='btn btn-sm buttonAdd200'>Add $200</button>";
                 playerHtml += "</div>";
             });
             
@@ -307,7 +303,6 @@ $(document).ready(function ($) {
 
 //This function checks a given property of objects in an array to find a match for a given value
 function lookup(array, prop, value) {
-    console.log
     for (var i = 0, len = array.length; i < len; i++)
         if (array[i][prop] === value) return array[i];
 }

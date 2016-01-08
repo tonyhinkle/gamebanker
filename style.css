@@ -60,8 +60,10 @@ td{
     background-color: #FAFAFA;
 }
 
-.buttonAddMoney, .buttonSubtractMoney, .buttonAdd200{
+#buttonAddMoney, #buttonSubtractMoney, #buttonAdd200{
     margin-left: 5px;
+    margin-bottom: 20px;
+    vertical-align: top;
 }
 
 .dollarsAddSubtract{
@@ -164,8 +166,8 @@ td{
     color: green;
 }
 
-.fa-chevron-left{
-    font-size: 12px;
+.inactiveChevron, .activeChevron{
+    font-size: 18px;
     vertical-align: middle;
     width: 20px;
 }
@@ -177,4 +179,8 @@ td{
 
 .activeChevron{
     color: #54A759;
+}
+
+#buttonAdd200{
+    margin-right: 57px;
 }
