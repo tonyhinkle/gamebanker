@@ -90,9 +90,8 @@ $(document).ready(function ($) {
         
         //If it is the second player to be added, show the .startGameElement elements
         if(playerArray.length == 2){
-            $(".startGameElement").css("opacity", "1");
-            $(".startGameElement").hide();
-            $(".startGameElement").fadeIn(1000);
+            $(".startGameElement").removeClass("invisible");
+            $(".startGameElement").fadeTo(800, 1);
             $("#btnStartGame, #startingAmount").removeAttr("disabled");
             $("#startingAmount").tooltip("enable");
         }

@@ -150,7 +150,7 @@ td{
 }
 
 .startGameElement, #btnStartGame, #startingAmount{
-    opacity: 0;
+    opacity: .1;
 }
 
 #uiConfig{

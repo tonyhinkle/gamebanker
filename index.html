@@ -14,12 +14,12 @@
 
     <div id="newPlayerDiv">
         <form class="form-inline" id="newPlayerForm">
-            <label for="newPlayer">Create Player: </label><input id="newPlayer" class="form-control" placeholder="Player Name" data-toggle="tooltip" 
-                                                                 title="Player names must be unique and cannot be blank.">
+            <label for="newPlayer">Create Player: </label>
+            <input id="newPlayer" class="form-control" placeholder="Player Name" data-toggle="tooltip" title="Player names must be unique and cannot be blank.">
             <button id="btnCreatePlayer" type="submit" class="btn btn-default" disabled>Create</button>
-            <label id="startingAmountLabel" class="startGameElement" for="startingAmount">Starting Amount: </label>
-            <input id="startingAmount" disabled class="form-control startGameElement" value="1630" data-toggle="tooltip" title="A valid number must be entered to start the game.">
-            <button id="btnStartGame" disabled type="button" class="btn StartGameElement">Start Game</button>
+            <label id="startingAmountLabel" class="startGameElement invisible" for="startingAmount">Starting Amount: </label>
+            <input id="startingAmount" disabled class="form-control startGameElement invisible" value="1630" data-toggle="tooltip" title="A valid number must be entered to start the game.">
+            <button id="btnStartGame" disabled type="button" class="btn StartGameElement invisible">Start Game</button>
         </form>
     </div>
     <div id="newPlayerList" class="help-block"></div>
