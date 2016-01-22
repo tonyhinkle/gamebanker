@@ -9,32 +9,24 @@ td{
 }
 
 #newPlayer{
-    width: 150px;
-    margin-left: .5em;
-    margin-right: .5em;
+    width: 100px;
+    max-width: 100px;
 }
 
 #startingAmount{
     width: 100px;
-    margin-left: .5em;
-    margin-right: .5em;
 }
 
 #newPlayerDiv{
     background-color: #54A759;
-    height: 7em;
-    text-align: center;
-}
-
-#newPlayerForm{
     padding: 2em;
+    width: 100%;
+    text-align: right:
 }
 
 #newPlayerList{
     text-align: center;
     font-size: 2em;
-    margin-top: .5in;
-    margin-right: 30%;
 }
 
 #gamePanel{
@@ -95,10 +87,6 @@ td{
     margin: 0 auto;
 }
 
-#btnStartGame{
-    margin-left: .5em;
-}
-
 #activityLog{
     width: 300px;
     vertical-align: top;
@@ -145,14 +133,6 @@ td{
     border-left: 5px solid #86C98A;
 }
 
-#startingAmountLabel{
-    margin-left: 2em;
-}
-
-.startGameElement, #btnStartGame, #startingAmount{
-    opacity: .1;
-}
-
 #uiConfig{
     text-align: right;
     margin-top: 5px;
@@ -183,4 +163,20 @@ td{
 
 #buttonAdd200{
     margin-right: 57px;
+}
+
+.startGameElement {
+    display: inline;
+}
+
+.newPlayerFormControl{
+    display: inline;
+}
+
+hr {
+    border-color: #86C98A;
+}
+
+#createPlayerLabel {
+    margin-left: 1.25em;
 }

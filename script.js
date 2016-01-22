@@ -90,10 +90,10 @@ $(document).ready(function ($) {
         
         //If it is the second player to be added, show the .startGameElement elements
         if(playerArray.length == 2){
-            $(".startGameElement").removeClass("invisible");
-            $(".startGameElement").fadeTo(800, 1);
-            $("#btnStartGame, #startingAmount").removeAttr("disabled");
-            $("#startingAmount").tooltip("enable");
+            $(".startGameElement").removeClass("invisible")
+                                  .hide()
+                                  .fadeIn(800)
+                                  .removeAttr("disabled")
         }
         
         //Disable #btnCreatePlayer.  The keyup handler will enable it when valid data is input
@@ -271,18 +271,15 @@ $(document).ready(function ($) {
     //Register the keyup handler for the #startingAmount input
     $("#startingAmount").on("keyup", function(){
         if($.isNumeric($("#startingAmount").val())){
-            //If #startingAmount contains a number, enable it and make it opaque
+            //If #startingAmount contains a number, enable the start button and make it opaque
             $("#btnStartGame").removeAttr("disabled");
             $("#btnStartGame").css("opacity", "1")
         }else{
-            //If #startingAmount does not contain a number, disable it and make it half opaque
+            //If #startingAmount does not contain a number, disable the start button and make it half opaque
             $("#btnStartGame").attr("disabled", "disabled");
             $("#btnStartGame").css("opacity", ".5")
         }
     });
-    
-    //Disable the tooltip on #startingAmount as it isn't visible when the page loads
-    $("#startingAmount").tooltip("disable");
     
     //Register the button that disables tooltips
     $("#btnDisableTooltips").on("click", function(){
