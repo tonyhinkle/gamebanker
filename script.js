@@ -46,13 +46,18 @@ $(document).ready(function ($) {
             }
         }
         
-        //Add amountChange to the player's current amount of $, and clear the input
-        playerAmount.val(parseInt(playerAmount.val()) + parseInt(amountChange));
-        getPlayerObject($(lastInput).parent().prevAll(".playerName").data("playername")).dollars = playerAmount.val();
+        //Add amountChange to the player's current amount of $
+        var playerObject = getPlayerObject($(lastInput).data("playername"));
+        playerObject.dollars = parseInt(playerObject.dollars) + parseInt(amountChange);
+        playerAmount.val(playerObject.dollars);
         
-        //Add the transaction to the activity log
-        $("#activityLog").prepend($(lastInput).parent().prevAll(".playerName").data("playername") + ": " + opColorOpenTag + operation + "$" + Math.abs(amountChange) + spanCloseTag + "<br>");
-        
+        //Clear all input fields and add the transaction to the activity log
+        $(".dollarsAddSubtract").val("");
+        $("#activityLog").prepend(playerObject.playerName + ": " + opColorOpenTag + operation 
+                                  + "$" + Math.abs(amountChange) + spanCloseTag + "<br>");
+
+        //Trigger the keyup handler on lastInput to disable Add $ and Subtract $ buttons
+        $(lastInput).keyup();
         savePlayerData();
     });
     
@@ -106,14 +111,15 @@ $(document).ready(function ($) {
     //Register the click handler for #btnStartGame
     $("#btnStartGame").on("click", function(){
         
+        //If there is no playerdata cookie, process items for a new game setup
         if (!($.cookie("playerdata"))){
-            console.log("starting with no cookie");
         
             //If #startingAmount is not valid, disable the button, show the tooltip, and abort
+            //This will only be hit if the user highlights the input with mouse and cuts, 
+            //deletes, or pastes non-numerical data into it
             if(!$.isNumeric($("#startingAmount").val())){
                 $("#startingAmount").tooltip("show");
-                $("#btnStartGame").attr("disabled", "disabled");
-                $("#btnStartGame").css("opacity", ".5")
+                $("#btnStartGame").attr("disabled", "disabled").css("opacity", ".5");
                 return;
             }
 
@@ -128,29 +134,30 @@ $(document).ready(function ($) {
             newPlayer.dollars = 0;
             playerArray.push(newPlayer);
         } else {
+            //If there is a cookie, put that data into playerArray
             playerArray = $.parseJSON($.cookie("playerdata"));
         };
         
         //Fade out the game setup elements and when the fadeOut is complete, concatenate the HTML for #playerPanel
         $("#newPlayerDiv, #newPlayerList").fadeOut(1000, function(){
             
-            //Set startingAmount to the value of #startingAmount and initialize other variables
-            //var startingAmount = $("#startingAmount").val();
+            //This section could be moved to static HTML
             var playerHtml = "";
                 playerHtml += "<button type='button' id='buttonClear' class='btn btn-sm'>Clear</button>";
-                playerHtml += "<button type='button' id='buttonAddMoney' class='btn btn-sm'>Add $</button>";
-                playerHtml += "<button type='button' id='buttonSubtractMoney' class='btn btn-sm'>Subtract $</button>";
+                playerHtml += "<button type='button' disabled id='buttonAddMoney' class='btn btn-sm'>Add $</button>";
+                playerHtml += "<button type='button' disabled id='buttonSubtractMoney' class='btn btn-sm'>Subtract $</button>";
                 playerHtml += "<button type='button' id='buttonAdd200' class='btn btn-sm'>Add $200</button>";
             
             //Iterate through each player object in playerArray
             $.each(playerArray, function( index, value ) {
                 
                 //Concatenate the HTML for each player's controls
-                playerHtml += "<div class='playerDiv'><div class='playerName droppable' data-playername='" + value.playerName + "'>" + value.playerName + "</div>";
-                playerHtml += ": $<input class='playerDollars' disabled value='" + value.dollars + "'>";
-                playerHtml += "<div class='draggable'><input class='dollarsAddSubtract' data-toggle='tooltip' "
+                dataPlayerName = " data-playername='" + value.playerName + "' "
+                playerHtml += "<div class='playerDiv'><div class='playerName droppable'" + dataPlayerName + ">" + value.playerName + "</div>";
+                playerHtml += ": $<input" + dataPlayerName + "class='playerDollars' disabled value='" + value.dollars + "'>";
+                playerHtml += "<div class='draggable'" + dataPlayerName + "><input" + dataPlayerName + "class='dollarsAddSubtract' data-toggle='tooltip' "
                 playerHtml += "title='Drag to another player&#39;s name to transfer money.'></div>";
-                playerHtml += "<span class='fa fa-chevron-left inactiveChevron'></span> <br>"
+                playerHtml += "<span" + dataPlayerName + " class='fa fa-chevron-left inactiveChevron'></span> <br>"
                 playerHtml += "</div>";
             });
             
@@ -198,16 +205,18 @@ $(document).ready(function ($) {
                     if($.isNumeric(amount)){
                 
                         //Add the amount to the user it was dropped on
-                        $(this).nextAll("input").val(parseInt($(this).nextAll("input").val()) + amount);
-                        getPlayerObject($(this).data("playername")).dollars = $(this).nextAll("input").val();
+                        var playerTo = getPlayerObject($(this).data("playername"));
+                        playerTo.dollars = parseInt($(this).nextAll("input").val()) + parseInt(amount);
+                        $(this).nextAll("input").val(playerTo.dollars);
                         
                         //Subtract the amount from the user it was dragged from
-                        $(ui.draggable).prev().val(parseInt($(ui.draggable).prev().val()) - amount);
-                        getPlayerObject($(ui.draggable).prevAll('.playerName').data("playername")).dollars =  $(ui.draggable).prev().val();
+                        var playerFrom = getPlayerObject($(ui.draggable).data("playername"));
+                        playerFrom.dollars = parseInt($(ui.draggable).prev().val()) - parseInt(amount);
+                        $(ui.draggable).prev().val(playerFrom.dollars);
                     
                         //Log the action and clear all .dollarsAddSubtract elements
-                        $("#activityLog").prepend("$" + amount + " from " + spanRedOpenTag + $(ui.draggable).prevAll('.playerName').data("playername") + spanCloseTag + " to " + spanGreenOpenTag + $(this).data("playername") + spanCloseTag + "<br>");
-                        //$(".dollarsAddSubtract").val("");
+                        $("#activityLog").prepend("$" + amount + " from " + spanRedOpenTag + playerFrom.playerName
+                                                  + spanCloseTag + " to " + spanGreenOpenTag + playerTo.playerName + spanCloseTag + "<br>");
                         $(event.toElement).val("");
                         
                         //Trigger the keyup handler on lastInput to disable Add $ and Subtract $ buttons
@@ -246,10 +255,10 @@ $(document).ready(function ($) {
     $(document).on("keyup", ".dollarsAddSubtract", function(){
         if($.isNumeric($(lastInput).val())){
             //If the element contains a valid number, enable the Add $ and Subtract $ buttons   
-            $(this).parent().nextAll('button').slice(1,3).removeAttr('disabled');
+            $("#buttonAddMoney, #buttonSubtractMoney").removeAttr('disabled');
         } else {
             //If the element does not contain a valid number, disable the Add $ and Subtract $ buttons
-            $(this).parent().nextAll('button').slice(1,3).attr('disabled', 'disabled');
+            $("#buttonAddMoney, #buttonSubtractMoney").attr('disabled', 'disabled');
         }
         $(".activeChevron").removeClass("activeChevron").addClass("inactiveChevron");
         $(lastInput).parent().next("span").addClass("activeChevron").removeClass("inactiveChevron");
@@ -264,7 +273,8 @@ $(document).ready(function ($) {
     //Register the keyup handler for #newPlayer
     $("#newPlayer").on("keyup", function(){
         if($("#newPlayer").val() != ""){
-            if(lookup(playerArray, "playerName", $("#newPlayer").val())){
+            if(getPlayerObject($("#newPlayer").val())){
+
                 //If #newPlayer contains the name of an existing player, disable #btnCreatePlayer and show the tooltip
                 $("#btnCreatePlayer").attr("disabled", "disabled");
                 $("#newPlayer").tooltip("show");
@@ -307,7 +317,6 @@ $(document).ready(function ($) {
     });
     
     function savePlayerData(){
-        console.log("saving data");
         $.cookie("playerdata", JSON.stringify(playerArray), {expires: 365});
     }
     
@@ -329,10 +338,4 @@ function getPlayerObject(player){
            return playerArray[i];
        }
    }
-}
-
-//This function checks a given property of objects in an array to find a match for a given value
-function lookup(array, prop, value) {
-    for (var i = 0, len = array.length; i < len; i++)
-        if (array[i][prop] === value) return array[i];
 }
