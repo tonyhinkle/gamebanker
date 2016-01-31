@@ -180,3 +180,9 @@ hr {
 #createPlayerLabel {
     margin-left: 1.25em;
 }
+
+#btnNewGame {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
