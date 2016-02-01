@@ -140,14 +140,12 @@ $(document).ready(function ($) {
         
         //Fade out the game setup elements and when the fadeOut is complete, concatenate the HTML for #playerPanel
         $("#newPlayerDiv, #newPlayerList").fadeOut(1000, function(){
+            //This runs twice for some reason, so check if it's already been run
+            if(playerPanelBuilt === true) return;
             
-            //This section could be moved to static HTML
+            playerPanelBuilt = true;
             var playerHtml = "";
-                playerHtml += "<button type='button' id='buttonClear' class='btn btn-sm'>Clear</button>";
-                playerHtml += "<button type='button' disabled id='buttonAddMoney' class='btn btn-sm'>Add $</button>";
-                playerHtml += "<button type='button' disabled id='buttonSubtractMoney' class='btn btn-sm'>Subtract $</button>";
-                playerHtml += "<button type='button' id='buttonAdd200' class='btn btn-sm'>Add $200</button>";
-            
+
             //Iterate through each player object in playerArray
             $.each(playerArray, function( index, value ) {
                 
@@ -162,11 +160,12 @@ $(document).ready(function ($) {
             });
             
             //Add all of the player controls to #playerPanel, and fade in #gamePanel
-            $("#playerPanel").html(playerHtml);
+            //playerHtml = $("#playerPanel").html() + playerHtml;
+            $("#playerPanel").append(playerHtml);
             $("#gamePanel").fadeIn(1000);
             $("#activityLog").html("Game started!")
             
-            //Initializ draggable elements
+            //Initialize draggable elements
             $(".draggable").draggable({
                 start: function (event, ui) {
                     $(this).data('preventBehaviour', true);
@@ -331,6 +330,7 @@ $(document).ready(function ($) {
 })
 
 var playerArray = new Array();
+var playerPanelBuilt = false;
 
 function getPlayerObject(player){
    for(var i=0;i<playerArray.length;i++){
