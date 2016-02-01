@@ -165,11 +165,7 @@ td{
     margin-right: 57px;
 }
 
-.startGameElement {
-    display: inline;
-}
-
-.newPlayerFormControl{
+.startGameElement, .newPlayerFormControl {
     display: inline;
 }
 
@@ -177,12 +173,12 @@ hr {
     border-color: #86C98A;
 }
 
-#createPlayerLabel {
-    margin-left: 1.25em;
-}
+//#createPlayerLabel {
+//    margin-left: 1.25em;
+//}
 
 #btnNewGame {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 10;
+    left: 10;
 }
