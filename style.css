@@ -19,6 +19,7 @@ td{
     padding: 2em;
     width: 100%;
     border-radius: 20px;
+    z-index: 2 !important;
 }
 
 #newPlayerList{
@@ -148,15 +149,6 @@ td{
     font-size: 18px;
     vertical-align: middle;
     width: 20px;
-}
-
-.inactiveChevron{
-    color: lightgray;
-    cursor: pointer;
-}
-
-.activeChevron{
-    color: #54A759;
 }
 
 .startGameElement, .newPlayerFormControl {

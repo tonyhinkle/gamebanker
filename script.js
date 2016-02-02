@@ -65,10 +65,10 @@ $(document).ready(function ($) {
         
         //If the user deleted the data in #newPlayer before clicking the button,
         //show the #newPlayer tooltip and return
-        if($("#newPlayer").val() == ""){
+        if($("#newPlayer").val() === ""){
             $("#btnCreatePlayer").attr("disabled", "disabled");
             $("#newPlayer").tooltip("show");
-            return
+            return;
         }
         
         //Create the new player object and add it to the newPlayer array
@@ -76,9 +76,9 @@ $(document).ready(function ($) {
         newPlayer.playerName = $("#newPlayer").val();
         newPlayer.dollars = "0";
         playerArray.push(newPlayer);
-        $("#newPlayer").val("")
+        $("#newPlayer").val("");
         
-        var newPlayerListHtml = ""
+        var newPlayerListHtml = "";
         
         //Build a list of players
         $.each(playerArray, function( index, value ) {
@@ -93,12 +93,13 @@ $(document).ready(function ($) {
             $(".startGameElement").removeClass("invisible")
                                   .hide()
                                   .fadeIn(800)
-                                  .removeAttr("disabled")
+                                  .removeAttr("disabled");
         }
         
         //Disable #btnCreatePlayer.  The keyup handler will enable it when valid data is input
         $("#btnCreatePlayer").attr("disabled", "disabled");
         
+        $("#newPlayer").focus();
         return false;
     });
     
@@ -133,9 +134,7 @@ $(document).ready(function ($) {
         };
         
         //Fade out the game setup elements and when the fadeOut is complete, concatenate the HTML for #playerPanel
-        $("#newPlayerDiv, #newPlayerList").fadeOut(1000, function(){
-            //This runs twice for some reason, so check if it's already been run
-            if(playerPanelBuilt === true) return;
+        $(".row").eq(0).fadeOut(1000, function(){
             
             playerPanelBuilt = true;
             var playerHtml = "";
@@ -152,7 +151,6 @@ $(document).ready(function ($) {
             });
             
             //Add all of the player controls to #playerPanel, and fade in #gamePanel
-            //playerHtml = $("#playerPanel").html() + playerHtml;
             $("#playerPanel").append(playerHtml);
             $("#gamePanel").fadeIn(1000);
             $("#activityLog").html("Game started!")
@@ -215,7 +213,8 @@ $(document).ready(function ($) {
                     }
                 }
             });
-        $(".playerDiv").eq(0).click();
+            //Set the first player as currentPlayer
+            $(".playerDiv").eq(0).click();
         });
     });
     
@@ -233,7 +232,7 @@ $(document).ready(function ($) {
         $("#dollarsAddSubtract").keyup();
     });
     
-    //Register the keyup event for .dollarsAddSubtract elements
+    //Register the keyup event for #dollarsAddSubtract
     $(document).on("keyup", "#dollarsAddSubtract", function(){
         if($.isNumeric($("#dollarsAddSubtract").val())){
             //If the element contains a valid number, enable the Add $ and Subtract $ buttons   

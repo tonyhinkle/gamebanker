@@ -1,7 +1,6 @@
 <head>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
-    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"> -->
     <script>$.widget.bridge('uitooltip', $.ui.tooltip);</script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -11,12 +10,13 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 </head>
 <body>
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-8">
+        <div class="col-sm-12 col-md-8" style="overflow: auto;">
             <section class="col-xs-12">
                 <form class="form-horizontal" id="newPlayerDiv">
                     <div class="form-group">
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label id="startingAmountLabel" class="col-sm-3 nopadding startGameElement invisible control-label" for="startingAmount">Starting Amount: </label>
                         <div class="col-sm-9">
-                            <input id="startingAmount" disabled class="startGameElement form-control invisible" value="1630" data-toggle="tooltip" title="A valid number must be entered to start the game.">
+                            <input id="startingAmount" type="number" disabled class="startGameElement form-control invisible" value="1630" data-toggle="tooltip" title="A valid number must be entered to start the game.">
                             <button id="btnStartGame" disabled type="button" class="btn StartGameElement invisible">Start Game</button>
                         </div>
                     </div>
@@ -38,13 +38,12 @@
             </section>
         </div>
         <div class="col-sm-12 col-md-4">
-            <div id="newPlayerList" class="help-block"></div>
+            <div id="newPlayerList" class="help-block block"></div>
         </div>
     </div>
     
     <div id="gamePanel">
         <button id="btnNewGame" class="btn btn-md">New Game</button>
-
         <table id="gameTable">
             <tr>
                 <td id="playerPanel">
@@ -60,7 +59,7 @@
                             </td>
                             <td id="tdInput">
                                 <div class='draggable'>
-                                    <input id='dollarsAddSubtract' class="form-control" data-toggle='tooltip' title='Drag to another player&#39;s name to transfer money.'>
+                                    <input id='dollarsAddSubtract' type="number" class="form-control" data-toggle='tooltip' title='Drag to another player&#39;s name to transfer money.'>
                                 </div>
                             </td>
                         </tr>
