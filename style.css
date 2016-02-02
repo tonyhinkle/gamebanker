@@ -8,20 +8,17 @@ td{
     vertical-align: top;
 }
 
-#newPlayer{
+#newPlayer, #startingAmount{
     width: 100px;
     max-width: 100px;
-}
-
-#startingAmount{
-    width: 100px;
+    margin-left: -8px;
 }
 
 #newPlayerDiv{
     background-color: #54A759;
     padding: 2em;
     width: 100%;
-    text-align: right:
+    border-radius: 20px;
 }
 
 #newPlayerList{
@@ -162,7 +159,6 @@ td{
     color: #54A759;
 }
 
-
 .startGameElement, .newPlayerFormControl {
     display: inline;
 }
@@ -170,10 +166,6 @@ td{
 hr {
     border-color: #86C98A;
 }
-
-//#createPlayerLabel {
-//    margin-left: 1.25em;
-//}
 
 #btnNewGame {
     position: fixed;
@@ -191,4 +183,14 @@ hr {
 
 #controlsTable{
     margin-bottom: 10px;
+}
+
+label {
+    white-space: nowrap;
+}
+
+.nopadding {
+   padding-right: 0 !important;
+    padding-left: 0 !important;
+    //margin: 0 !important;
 }
