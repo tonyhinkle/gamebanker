@@ -13,7 +13,7 @@ $(document).ready(function ($) {
         selector: '[data-toggle=tooltip]',
         placement: 'auto',
         trigger: 'hover',
-        delay: { "show": 1000, "hide": 2000 }
+        delay: { "show": 1000, "hide": 500 }
     });
     
     //Register the click event for the buttons to add and subtract money
@@ -301,8 +301,8 @@ $(document).ready(function ($) {
     
     $("body").on("click", ".playerDiv", function(){
         currentPlayer = getPlayerObject($(this).data("playername"));
-        $(".playerDiv").children().addBack().css("color", "#888888");
-        $(this).children().addBack().css("color", "#54A759");
+        $(".playerDiv").children().addBack().css("background-color", "#FAFAFA").css("color", "#888888");
+        $(this).children().addBack().css("background-color", "#86C98A").css("color", "white");
     });
     
 })

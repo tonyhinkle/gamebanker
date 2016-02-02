@@ -38,10 +38,12 @@ td{
 }
 
 .playerDiv{
-    padding-bottom: .75em;
-    padding-right: .75em;
+    padding-top: .35em;
+    padding-bottom: .35em;
+    margin-right: .75em;
     font-size: 2em;
     cursor: pointer;
+    border-radius: 15px;
 }
 
 .playerDollars{
@@ -61,6 +63,7 @@ td{
 #dollarsAddSubtract{
     width: 75px;
     display: inline;
+    margin-left: 1em;
 }
 
 #currency{
@@ -105,7 +108,6 @@ td{
 }
 
 .draggable, .droppable{
-    padding: 5px;
     display: inline;
 }
 
