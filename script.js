@@ -136,7 +136,6 @@ $(document).ready(function ($) {
         //Fade out the game setup elements and when the fadeOut is complete, concatenate the HTML for #playerPanel
         $(".row").eq(0).fadeOut(1000, function(){
             
-            playerPanelBuilt = true;
             var playerHtml = "";
 
             //Iterate through each player object in playerArray
@@ -146,7 +145,6 @@ $(document).ready(function ($) {
                 dataPlayerName = " data-playername='" + value.playerName + "' "
                 playerHtml += "<div class='playerDiv'" + dataPlayerName + "><div class='playerName droppable'" + dataPlayerName + ">" + value.playerName + "</div>";
                 playerHtml += ": $<input" + dataPlayerName + "class='playerDollars' disabled value='" + value.dollars + "'>";
-                playerHtml += "<span" + dataPlayerName + " class='fa fa-chevron-left inactiveChevron'></span> <br>"
                 playerHtml += "</div>";
             });
             
@@ -241,7 +239,6 @@ $(document).ready(function ($) {
             //If the element does not contain a valid number, disable the Add $ and Subtract $ buttons
             $("#buttonAddMoney, #buttonSubtractMoney").attr('disabled', 'disabled');
         }
-        $(".activeChevron").removeClass("activeChevron").addClass("inactiveChevron");
     });
     
     //Register the mouseout handler for .dollarsAddSubtract to hide it's tooltip.  This typically would be necessary, 
@@ -287,13 +284,6 @@ $(document).ready(function ($) {
         $("#btnDisableTooltips").hide();
     });
     
-    //Register the click event for the inactive #dollarsAddSubtract chevron indicators
-    $("body").on("click", ".inactiveChevron", function() {
-        
-        $(".activeChevron").removeClass("activeChevron").addClass("inactiveChevron");
-        $(this).addClass("activeChevron").removeClass("inactiveChevron");
-    });
-    
     function savePlayerData(){
         $.cookie("playerdata", JSON.stringify(playerArray), {expires: 365});
     }
@@ -316,7 +306,6 @@ $(document).ready(function ($) {
 })
 
 var playerArray = new Array();
-var playerPanelBuilt = false;
 var currentPlayer;
 
 function getPlayerObject(player){

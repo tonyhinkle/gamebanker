@@ -16,13 +16,13 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-8" style="overflow: auto;">
+        <div class="col-sm-12 col-md-8" id="newGameFormDiv">
             <section class="col-xs-12">
                 <form class="form-horizontal" id="newPlayerDiv">
                     <div class="form-group">
-                        <label class="col-sm-3 nopadding newPlayerFormControl control-label" id="createPlayerLabel" for="newPlayer">Create Player: </label>
+                        <label class="col-sm-3 nopadding newPlayerFormControl control-label" id="createPlayerLabel" for="newPlayer">New Player: </label>
                         <div class="col-sm-9">
-                            <input id="newPlayer" class="form-control newPlayerFormControl" placeholder="Player Name" data-toggle="tooltip" title="Player names must be unique and cannot be blank.">
+                            <input id="newPlayer" class="form-control newPlayerFormControl" data-container="body" placeholder="Player Name" data-toggle="tooltip" title="Player names must be unique and cannot be blank.">
                             <button id="btnCreatePlayer" class="btn btn-default newPlayerFormControl" disabled>Create</button>
                         </div>
                     </div>

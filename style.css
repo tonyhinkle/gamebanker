@@ -144,12 +144,6 @@ td{
     color: green;
 }
 
-.inactiveChevron, .activeChevron{
-    font-size: 18px;
-    vertical-align: middle;
-    width: 20px;
-}
-
 .startGameElement, .newPlayerFormControl {
     display: inline;
 }
@@ -184,4 +178,8 @@ label {
    padding-right: 0 !important;
     padding-left: 0 !important;
     //margin: 0 !important;
+}
+
+#newGameFormDiv {
+    overflow: auto;
 }
