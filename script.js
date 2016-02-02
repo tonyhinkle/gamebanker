@@ -12,7 +12,8 @@ $(document).ready(function ($) {
     $('body').tooltip({
         selector: '[data-toggle=tooltip]',
         placement: 'auto',
-        trigger: 'hover'
+        trigger: 'hover',
+        delay: { "show": 1000, "hide": 2000 }
     });
     
     //Register the click event for the buttons to add and subtract money
@@ -258,6 +259,7 @@ $(document).ready(function ($) {
             } else {
                 //If #newPlayer contains data a name that doesn't conflict with an existing name, enable #btnCreatePlayer
                 $("#btnCreatePlayer").removeAttr("disabled");
+                $("#newPlayer").tooltip("hide");
             }
         }else{
             //If #newPlayer is empty, disable #btnCreatePlayer
@@ -292,7 +294,7 @@ $(document).ready(function ($) {
         $("#btnStartGame").trigger("click");
     }
     
-    $("#btnNewGame").on("click", function(){
+    $("#buttonNewGameConfirm").on("click", function(){
         $.removeCookie("playerdata");
         location.reload();
     });
