@@ -58,6 +58,8 @@ td{
     margin-bottom: 5px;
     vertical-align: middle;
     width: 80px;
+    font-weight: bold;
+    font-size: 14;
 }
 
 #dollarsAddSubtract{
@@ -76,7 +78,7 @@ td{
     background-color: #54A759;
     padding: 10px;
     margin-bottom: 10px;
-    margin-left: 10px;
+    margin-left: 15px;
     cursor: pointer;
     width: 80px;
     border-radius: 15px;
@@ -90,7 +92,6 @@ td{
 }
 
 #activityLog{
-    width: 300px;
     vertical-align: top;
     padding-left: 15px;
     height: 400px;
@@ -99,11 +100,12 @@ td{
     line-height: 1.5em;
     border: solid 1px #cccccc;
     border-radius: 10px;
-    margin-left: 25px;
+    margin: auto;
+    text-align: left;
+    width: 100%
 }
 
 #activityLogCell{
-    padding-left: 15px;
     overflow: hidden;
 }
 
@@ -135,8 +137,10 @@ td{
 }
 
 #uiConfig{
+    padding-top: 10px;
     text-align: right;
-    margin-top: 5px;
+    width: 100%; 
+    margin: auto
 }
 
 .colorRed{
@@ -189,4 +193,36 @@ label {
     color: white;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
+
+@media all and (max-width: 500px) { /* screen size until 500px */
+    .playerDiv {
+        font-size: 1.5em; /* 0.8x default size */
+    }
+    #activityLog {
+        height: 175px;
+    }
+    .btn-sm {
+        width: 60px !important;
+    }
+    .container {
+        padding-right: 0px;
+    }
+    .bill {
+        width: 50px;
+        font-size: .75em;
+    }
+}
+
+@media all and (max-width: 990px) { /* screen size until 720px */
+    #activityLog {
+        height: 200px;
+    }
+    
+    #uiConfig, #activityLog {
+        width: 75%;
+    }
+    
+}
+
 }
