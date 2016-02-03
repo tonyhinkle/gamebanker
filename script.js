@@ -117,10 +117,12 @@ $(document).ready(function ($) {
             }
 
             //Create the "Board" player to track "Free Parking"  money
-            var newPlayer = new Object();
-            newPlayer.playerName = "Board";
-            newPlayer.dollars = 0;
-            playerArray.push(newPlayer);
+            if($("#checkboxBoardPlayer").is(":checked")){
+                var newPlayer = new Object();
+                newPlayer.playerName = $("#inputBoardPlayer").val();
+                newPlayer.dollars = 0;
+                playerArray.push(newPlayer);
+            }
             
             if($("#defaultGameCheckbox").is(":checked")){
                 $.cookie("defaultgame", JSON.stringify(playerArray), {expires: 365});
@@ -335,6 +337,14 @@ $(document).ready(function ($) {
         placement: 'auto',
         trigger: 'hover',
         delay: { "show": 1000, "hide": 500 }
+    });
+    
+    $("#checkboxBoardPlayer").on("change", function() {
+        if($("#checkboxBoardPlayer").is(":checked")){
+            $(".boardPlayerElement").removeClass("invisible");
+        } else {
+            $(".boardPlayerElement").addClass("invisible");
+        }
     });
 })
 

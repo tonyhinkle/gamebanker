@@ -8,7 +8,7 @@ td{
     vertical-align: top;
 }
 
-#newPlayer, #startingAmount{
+#newPlayer, #startingAmount, #inputBoardPlayer {
     width: 100px;
     max-width: 100px;
     margin-left: -15px;
@@ -237,4 +237,9 @@ label {
 
 .tooltip {
     white-space: pre-line;
+}
+
+#labelCheckboxBoardPlayer, #checkboxBoardPlayer {
+    padding-top: 10px;
+    padding-bottom: 5px;
 }
