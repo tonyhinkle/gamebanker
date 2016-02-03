@@ -155,6 +155,7 @@ $(document).ready(function ($) {
             
             //Add all of the player controls to #playerPanel, and fade in #gamePanel
             $("#playerPanel").append(playerHtml);
+            $("#playerPanel").parent().after("<tr><td id='tdDeletePlayerButtonCell'><button id='btnDeletePlayer' type='button' class='btn' data-toggle='modal' data-target='#modalDeletePlayerConfirm'>Delete Player</button></td></tr>");
             $("#gamePanel").fadeIn(1000);
             $("#activityLog").html("Game started!")
             
@@ -345,6 +346,21 @@ $(document).ready(function ($) {
         } else {
             $(".boardPlayerElement").addClass("invisible");
         }
+    });
+
+    $("#buttonDeletePlayerConfirm").on("click", function (){
+        for(var i=0;i<playerArray.length;i++){
+            if(playerArray[i].playerName === currentPlayer.playerName){
+                break;
+            }
+        }
+        playerArray.splice(i,1);
+        $(".playerDiv[data-playername='" + currentPlayer.playerName + "']").remove()
+        $(".playerDiv").eq(0).click(); 
+    });
+    
+    $("#modalDeletePlayerConfirm").on("shown.bs.modal", function (){
+        $("#divDeletePlayerConfirmBody").html("Are you sure you want to delete " + currentPlayer.playerName + "?");
     });
 })
 

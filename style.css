@@ -241,3 +241,7 @@ label {
 #btnStartGame, #btnStartDefaultGame {
     margin-top: 10px;
 }
+
+#tdDeletePlayerButtonCell {
+    padding-top: 30px;
+}
