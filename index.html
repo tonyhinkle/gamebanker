@@ -25,17 +25,12 @@
                             <input id="newPlayer" class="form-control newPlayerFormControl" data-container="body" placeholder="Player Name" data-toggle="tooltip" title="Player names must be unique and cannot be blank.">
                             <button id="btnCreatePlayer" class="btn btn-default newPlayerFormControl" disabled>Create</button>
                         </div>
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-9">
-                            <button id="btnStartDefaultGame" data-container="body" data-toggle="tooltip" class="btn invisible">Start Default Game</button>
-                        </div>
                     </div>
                     <hr>
                     <div class="form-group">
                         <label id="startingAmountLabel" class="col-sm-3 nopadding startGameElement invisible control-label" for="startingAmount">Starting Amount:&nbsp;</label>
                         <div class="col-sm-9">
                             <input id="startingAmount" type="number" disabled class="startGameElement form-control invisible" value="1630" title="A valid number must be entered to start the game.">
-                            <button id="btnStartGame" disabled type="button" class="btn StartGameElement invisible" >Start Game</button>
                             <br>
                             <div class="checkbox invisible startGameElement">
                                 <label>
@@ -55,7 +50,11 @@
                         </div>
                         <label id="labelBoardPlayer" class="boardPlayerElement col-sm-3 nopadding control-label invisible" for="boardPlayer">Board Player:&nbsp;</label>
                         <div class="col-sm-9">
-                            <input id="inputBoardPlayer" class="boardPlayerElement form-control invisible" value="Board" data-toggle="tooltip" title='Use this "player" for games that have a pot that accumulates money until a player wins the pot.'>
+                                <input id="inputBoardPlayer" class="boardPlayerElement form-control invisible" value="Board" data-toggle="tooltip" title='Use this "player" for games that have a pot that accumulates money until a player wins the pot.'>
+                        </div>
+                        <div class="col-sm-12">
+                            <button id="btnStartDefaultGame" data-container="body" data-toggle="tooltip" class="btn invisible">Start Default Game</button>
+                            <button id="btnStartGame" disabled type="button" class="btn StartGameElement invisible" >Start Game</button>
                         </div>
                     </div>
                 </form>
