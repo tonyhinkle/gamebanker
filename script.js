@@ -137,7 +137,7 @@ $(document).ready(function ($) {
     });
 
     function startGame(){
-        console.log(playerArray);
+        
         //Fade out the game setup elements and when the fadeOut is complete, concatenate the HTML for #playerPanel
         $(".row").eq(0).fadeOut(1000, function(){
             
@@ -157,7 +157,10 @@ $(document).ready(function ($) {
             $("#playerPanel").append(playerHtml);
             $("#playerPanel").parent().after("<tr><td id='tdDeletePlayerButtonCell'><button id='btnDeletePlayer' type='button' class='btn' data-toggle='modal' data-target='#modalDeletePlayerConfirm'>Delete Player</button></td></tr>");
             $("#gamePanel").fadeIn(1000);
-            $("#activityLog").html("Game started!")
+            $("#activityLog").html("Game started!");
+            
+            //Set the first player as currentPlayer
+            $(".playerDiv").eq(0).click();
             
             //Initialize draggable elements
             $(".draggable").draggable({
@@ -204,7 +207,7 @@ $(document).ready(function ($) {
                         if(playerTo.playerName === currentPlayer.playerName) return;
                         
                         playerTo.dollars = parseInt(playerTo.dollars) + parseInt(amount);
-                        $(this).nextAll("input").val(playerTo.dollars);
+                        $("input[data-playername='" + playerTo.playerName + "']").val(playerTo.dollars);
                         
                         //Subtract the amount from the user it was dragged from
                         currentPlayer.dollars = parseInt(currentPlayer.dollars) - parseInt(amount);
@@ -221,8 +224,6 @@ $(document).ready(function ($) {
                     }
                 }
             });
-            //Set the first player as currentPlayer
-            $(".playerDiv").eq(0).click();
         });
     }
     

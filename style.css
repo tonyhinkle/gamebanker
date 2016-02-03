@@ -115,7 +115,7 @@ td{
 }
 
 .tooltip > .tooltip-inner{
-    padding: 10px;
+    padding: 5px;
     background-color: #86C98A;
     color: #333333;
     font-weight: bold;
