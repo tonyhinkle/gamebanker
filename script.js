@@ -316,7 +316,7 @@ $(document).ready(function ($) {
         var defaultGameArray = $.parseJSON($.cookie("defaultgame"));
         
         for(var i=0; i<defaultGameArray.length;i++){
-            defaultGameText += defaultGameArray[i].playerName + ": $" + defaultGameArray[i].dollars + "; ";
+            defaultGameText += defaultGameArray[i].playerName + ": $" + defaultGameArray[i].dollars + "\n";
         }
         
         defaultGameText = defaultGameText.substr(0, defaultGameText.length - 2);

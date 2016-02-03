@@ -226,9 +226,6 @@ label {
         width: 75%;
     }
 }
-#btnDisableTooltips {
-    
-}
 
 #startingAmount {
     margin-bottom: 10px !important;
@@ -238,6 +235,6 @@ label {
     margin-left: 88px;
 }
 
-.ui-tooltip {
+.tooltip {
     white-space: pre-line;
 }
