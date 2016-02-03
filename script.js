@@ -324,13 +324,6 @@ $(document).ready(function ($) {
         startGame();
         return false;
     });
-    
-    $(body).on("click",  function (){
-        alert("hi");
-        playerArray = $.parseJSON($.cookie("defaultgame"));
-        startGame();
-        return false;
-    });
 })
 
 var playerArray = new Array();

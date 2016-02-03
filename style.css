@@ -11,7 +11,8 @@ td{
 #newPlayer, #startingAmount{
     width: 100px;
     max-width: 100px;
-    margin-left: -8px;
+    margin-left: -15px;
+    margin-bottom: 5px;
 }
 
 #newPlayerDiv{
@@ -231,4 +232,8 @@ label {
 
 #startingAmount {
     margin-bottom: 10px !important;
+}
+
+#btnStartDefaultGame {
+    margin-left: 88px;
 }
