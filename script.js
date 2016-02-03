@@ -199,6 +199,10 @@ $(document).ready(function ($) {
                 
                         //Add the amount to the user it was dropped on
                         var playerTo = getPlayerObject($(this).data("playername"));
+                        
+                        //...but cancel it if it was dropped on the same player
+                        if(playerTo.playerName === currentPlayer.playerName) return;
+                        
                         playerTo.dollars = parseInt(playerTo.dollars) + parseInt(amount);
                         $(this).nextAll("input").val(playerTo.dollars);
                         

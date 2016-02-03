@@ -240,8 +240,15 @@ label {
 
 #btnStartGame, #btnStartDefaultGame {
     margin-top: 10px;
+    margin-right: 10px;
 }
 
 #tdDeletePlayerButtonCell {
     padding-top: 30px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
