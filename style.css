@@ -181,7 +181,6 @@ label {
 .nopadding {
    padding-right: 0 !important;
     padding-left: 0 !important;
-    //margin: 0 !important;
 }
 
 #newGameFormDiv {
@@ -212,9 +211,12 @@ label {
         width: 50px;
         font-size: .75em;
     }
+    #uiConfig .btn {
+        font-size: .85em;
+    }
 }
 
-@media all and (max-width: 990px) { /* screen size until 720px */
+@media all and (max-width: 990px) { /* screen size until 990px */
     #activityLog {
         height: 200px;
     }
@@ -222,7 +224,11 @@ label {
     #uiConfig, #activityLog {
         width: 75%;
     }
+}
+#btnDisableTooltips {
     
 }
 
+#startingAmount {
+    margin-bottom: 10px !important;
 }

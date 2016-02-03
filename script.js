@@ -129,11 +129,21 @@ $(document).ready(function ($) {
             newPlayer.playerName = "Board";
             newPlayer.dollars = 0;
             playerArray.push(newPlayer);
+            
+            if($("#defaultGameCheckbox").is(":checked")){
+                $.cookie("defaultgame", JSON.stringify(playerArray), {expires: 365});
+                $("#defaultGameCheckbox").prop("checked", false);
+            }
+            
         } else {
             //If there is a cookie, put that data into playerArray
             playerArray = $.parseJSON($.cookie("playerdata"));
         };
-        
+        startGame();
+    });
+
+    function startGame(){
+        console.log(playerArray);
         //Fade out the game setup elements and when the fadeOut is complete, concatenate the HTML for #playerPanel
         $(".row").eq(0).fadeOut(1000, function(){
             
@@ -215,7 +225,7 @@ $(document).ready(function ($) {
             //Set the first player as currentPlayer
             $(".playerDiv").eq(0).click();
         });
-    });
+    }
     
     //Register the click event for the .bill DIVs
     //TODO: Use .isNumeric
@@ -304,7 +314,23 @@ $(document).ready(function ($) {
         $(".playerDiv").children().addBack().css("background-color", "#FAFAFA").css("color", "#888888");
         $(this).children().addBack().css("background-color", "#86C98A").css("color", "white");
     });
+ 
+    if($.cookie("defaultgame")){
+        $("#btnStartDefaultGame").removeClass("invisible");
+    }
+
+    $("#btnStartDefaultGame").on("click", function (){
+        playerArray = $.parseJSON($.cookie("defaultgame"));
+        startGame();
+        return false;
+    });
     
+    $(body).on("click",  function (){
+        alert("hi");
+        playerArray = $.parseJSON($.cookie("defaultgame"));
+        startGame();
+        return false;
+    });
 })
 
 var playerArray = new Array();
