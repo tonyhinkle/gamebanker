@@ -8,14 +8,6 @@ $(document).ready(function ($) {
     //Set focus on the #newPlayer input
     $("#newPlayer").focus();
     
-    //Initialize tooltips
-    $('body').tooltip({
-        selector: '[data-toggle=tooltip]',
-        placement: 'auto',
-        trigger: 'hover',
-        delay: { "show": 1000, "hide": 500 }
-    });
-    
     //Register the click event for the buttons to add and subtract money
     $(document).on("click", "#buttonAddMoney, #buttonSubtractMoney, #buttonAdd200", function(){
         
@@ -315,14 +307,34 @@ $(document).ready(function ($) {
         $(this).children().addBack().css("background-color", "#86C98A").css("color", "white");
     });
  
+    //Show the Start Default Game button if a default game is found
     if($.cookie("defaultgame")){
         $("#btnStartDefaultGame").removeClass("invisible");
+        
+        //Set the tooltip to show the default game players
+        var defaultGameText = "";
+        var defaultGameArray = $.parseJSON($.cookie("defaultgame"));
+        
+        for(var i=0; i<defaultGameArray.length;i++){
+            defaultGameText += defaultGameArray[i].playerName + ": $" + defaultGameArray[i].dollars + "; ";
+        }
+        
+        defaultGameText = defaultGameText.substr(0, defaultGameText.length - 2);
+        $("#btnStartDefaultGame").prop("title", defaultGameText);
     }
 
     $("#btnStartDefaultGame").on("click", function (){
         playerArray = $.parseJSON($.cookie("defaultgame"));
         startGame();
         return false;
+    });
+    
+    //Initialize tooltips
+    $("body").tooltip({
+        selector: '[data-toggle=tooltip]',
+        placement: 'auto',
+        trigger: 'hover',
+        delay: { "show": 1000, "hide": 500 }
     });
 })
 

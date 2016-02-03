@@ -237,3 +237,7 @@ label {
 #btnStartDefaultGame {
     margin-left: 88px;
 }
+
+.ui-tooltip {
+    white-space: pre-line;
+}
