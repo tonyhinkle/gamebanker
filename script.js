@@ -155,7 +155,7 @@ $(document).ready(function ($) {
             
             //Add all of the player controls to #playerPanel, and fade in #gamePanel
             $("#playerPanel").append(playerHtml);
-            $("#playerPanel").parent().after("<tr><td id='tdDeletePlayerButtonCell'><button id='btnDeletePlayer' type='button' class='btn' data-toggle='modal' data-target='#modalDeletePlayerConfirm'>Delete Player</button></td></tr>");
+            $("#playerPanel").parent().after("<tr><td id='tdDeletePlayerButtonCell'><button id='btnDeletePlayer' type='button' class='btn btn-sm' data-toggle='modal' data-target='#modalDeletePlayerConfirm'>Delete Player</button></td></tr>");
             $("#gamePanel").fadeIn(1000);
             $("#activityLog").html("Game started!");
             
