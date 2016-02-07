@@ -61,7 +61,7 @@ $(document).ready(function ($) {
         //Create the new player object and add it to the newPlayer array
         var newPlayer = new Object();
         newPlayer.playerName = $("#newPlayer").val();
-        newPlayer.dollars = "0";
+        newPlayer.dollars = 0;
         playerArray.push(newPlayer);
         $("#newPlayer").val("");
         
@@ -258,8 +258,8 @@ $(document).ready(function ($) {
             
             var amount = parseInt($("#dollarsAddSubtract").val());
             
-            playerFrom.dollars = playerFrom.dollars - amount;
-            currentPlayer.dollars = currentPlayer.dollars + amount;
+            playerFrom.dollars = parseInt(playerFrom.dollars) - amount;
+            currentPlayer.dollars = parseInt(currentPlayer.dollars) + amount;
             
             //Log the action and clear all .dollarsAddSubtract elements
             $("#activityLog").prepend("$" + amount + " from " + spanRedOpenTag + playerFrom.playerName
