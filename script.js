@@ -22,7 +22,6 @@ $(document).ready(function ($) {
             amountChange = 200;
         }
         else{
-            
             //If an Add $ or Subtract $ button was clicked, set amountChanged to the appropriate input value
             amountChange = parseInt($("#dollarsAddSubtract").val());
             
@@ -36,16 +35,11 @@ $(document).ready(function ($) {
         
         //Add amountChange to the player's current amount of $
         currentPlayer.dollars = parseInt(currentPlayer.dollars) + parseInt(amountChange);
-        $("input[data-playername='" + currentPlayer.playerName + "']").val(currentPlayer.dollars);
+        updatePlayerDollars();
         
-        //Clear the input field and add the transaction to the activity log
-        $("#dollarsAddSubtract").val("");
+        //Add the transaction to the activity log
         $("#activityLog").prepend(currentPlayer.playerName + ": " + opColorOpenTag + operation 
-                                  + "$" + Math.abs(amountChange) + spanCloseTag + "<br>");
-
-        //Trigger the keyup handler on #dollarsAddSubtract to disable Add $ and Subtract $ buttons
-        $("#dollarsAddSubtract").keyup();
-        savePlayerData();
+                 + "$" + Math.abs(amountChange) + spanCloseTag + "<br>");
     });
     
     //Register the click event for the "Clear" buttons
@@ -124,6 +118,7 @@ $(document).ready(function ($) {
                 playerArray.push(newPlayer);
             }
             
+            //Store the defaultgame cookie with this setup if #defaultGameCheckbox was checked
             if($("#defaultGameCheckbox").is(":checked")){
                 $.cookie("defaultgame", JSON.stringify(playerArray), {expires: 365});
                 $("#defaultGameCheckbox").prop("checked", false);
@@ -143,87 +138,28 @@ $(document).ready(function ($) {
             
             var playerHtml = "";
 
-            //Iterate through each player object in playerArray
+            //Iterate through each player object in playerArray to build the associated HTML elements
             $.each(playerArray, function( index, value ) {
                 
                 //Concatenate the HTML for each player's controls
                 dataPlayerName = " data-playername='" + value.playerName + "' "
-                playerHtml += "<div class='playerDiv'" + dataPlayerName + "><div class='playerName droppable'" + dataPlayerName + ">" + value.playerName + "</div>";
+                playerHtml += "<div class='playerDiv'" + dataPlayerName + "><div class='playerName'" + dataPlayerName + ">" + value.playerName + "</div>";
                 playerHtml += ": $<input" + dataPlayerName + "class='playerDollars' disabled value='" + value.dollars + "'>";
                 playerHtml += "</div>";
             });
             
             //Add all of the player controls to #playerPanel, and fade in #gamePanel
             $("#playerPanel").append(playerHtml);
+            
+            //Add the 'Delete Player' button
             $("#playerPanel").parent().after("<tr><td id='tdDeletePlayerButtonCell'><button id='btnDeletePlayer' type='button' class='btn btn-sm' data-toggle='modal' data-target='#modalDeletePlayerConfirm'>Delete Player</button></td></tr>");
+            
             $("#gamePanel").fadeIn(1000);
             $("#activityLog").html("Game started!");
             
             //Set the first player as currentPlayer
             $(".playerDiv").eq(0).click();
             
-            //Initialize draggable elements
-            $(".draggable").draggable({
-                start: function (event, ui) {
-                    $(this).data('preventBehaviour', true);
-                },
-                revert : true
-            });
-            
-            //Inputs cannot be draggable by default, so this is included to make them draggable.
-            $(".draggable").find(":input").on('mousedown', function (e) {
-                var mdown = new MouseEvent("mousedown", {
-                screenX: e.screenX,
-                screenY: e.screenY,
-                clientX: e.clientX,
-                clientY: e.clientY,
-                view: window
-            });
-            
-            //Inputs cannot be draggable by default, so this is included to make them draggable.
-            $(this).closest('.draggable')[0].dispatchEvent(mdown);
-            }).on('click', function (e) {
-                var $draggable = $(this).closest('.draggable');
-                if ($draggable.data("preventBehaviour")) {
-                    e.preventDefault();
-                    $draggable.data("preventBehaviour", false)
-                }
-            });
-            
-            //Initialize the droppable elements
-            $( ".droppable" ).droppable({
-                drop: function( event, ui ) {
-                
-                    //Get the value of the dropped element
-                    var amount = parseInt(event.toElement.value);
-                    
-                    //If amount is a number, then process the action
-                    if($.isNumeric(amount)){
-                
-                        //Add the amount to the user it was dropped on
-                        var playerTo = getPlayerObject($(this).data("playername"));
-                        
-                        //...but cancel it if it was dropped on the same player
-                        if(playerTo.playerName === currentPlayer.playerName) return;
-                        
-                        playerTo.dollars = parseInt(playerTo.dollars) + parseInt(amount);
-                        $("input[data-playername='" + playerTo.playerName + "']").val(playerTo.dollars);
-                        
-                        //Subtract the amount from the user it was dragged from
-                        currentPlayer.dollars = parseInt(currentPlayer.dollars) - parseInt(amount);
-                        $("input[data-playername='" + currentPlayer.playerName + "']").val(currentPlayer.dollars);
-                    
-                        //Log the action and clear all .dollarsAddSubtract elements
-                        $("#activityLog").prepend("$" + amount + " from " + spanRedOpenTag + currentPlayer.playerName
-                                                  + spanCloseTag + " to " + spanGreenOpenTag + playerTo.playerName + spanCloseTag + "<br>");
-                        $(event.toElement).val("");
-                        
-                        //Trigger the keyup handler on #dollarsAddSubtract to disable Add $ and Subtract $ buttons
-                        $("#dollarsAddSubtract").keyup();
-                        savePlayerData();
-                    }
-                }
-            });
         });
     }
     
@@ -250,12 +186,6 @@ $(document).ready(function ($) {
             //If the element does not contain a valid number, disable the Add $ and Subtract $ buttons
             $("#buttonAddMoney, #buttonSubtractMoney").attr('disabled', 'disabled');
         }
-    });
-    
-    //Register the mouseout handler for .dollarsAddSubtract to hide it's tooltip.  This typically would be necessary, 
-    //but with the drag and drop functionality the tooltip was staying displayed after the drag and drop.
-    $(document).on("mouseout", "#dollarsAddSubtract", function(){
-        $('.tooltip').hide();
     });
     
     //Register the keyup handler for #newPlayer
@@ -310,9 +240,33 @@ $(document).ready(function ($) {
     });
     
     $("body").on("click", ".playerDiv", function(){
+        
+        var playerFrom = currentPlayer;
+        
+        //Set the player that was clicked on to the current player
         currentPlayer = getPlayerObject($(this).data("playername"));
+        //If the same player was clicked, do nothing
+        if(currentPlayer === playerFrom) return;
+        
+        //Remove highligh from all players, then highlight the player that was clicked on 
         $(".playerDiv").children().addBack().css("background-color", "#FAFAFA").css("color", "#888888");
         $(this).children().addBack().css("background-color", "#86C98A").css("color", "white");
+
+        //if there is a number in #dollarsAddSubtract, treat the action as a transfer
+        if($.isNumeric($("#dollarsAddSubtract").val())){
+            //show the modal for confirmation
+            
+            var amount = parseInt($("#dollarsAddSubtract").val());
+            
+            playerFrom.dollars = playerFrom.dollars - amount;
+            currentPlayer.dollars = currentPlayer.dollars + amount;
+            
+            //Log the action and clear all .dollarsAddSubtract elements
+            $("#activityLog").prepend("$" + amount + " from " + spanRedOpenTag + playerFrom.playerName
+                      + spanCloseTag + " to " + spanGreenOpenTag + currentPlayer.playerName + spanCloseTag + "<br>");
+
+            updatePlayerDollars();
+        }
     });
  
     //Show the Start Default Game button if a default game is found
@@ -361,12 +315,27 @@ $(document).ready(function ($) {
         }
         playerArray.splice(i,1);
         $(".playerDiv[data-playername='" + currentPlayer.playerName + "']").remove()
-        $(".playerDiv").eq(0).click(); 
+        $(".playerDiv").eq(0).click();
+        savePlayerData();
     });
     
     $("#modalDeletePlayerConfirm").on("shown.bs.modal", function (){
         $("#divDeletePlayerConfirmBody").html("Are you sure you want to delete " + currentPlayer.playerName + "?");
     });
+    
+    function updatePlayerDollars(){
+        for(var i=0;i<playerArray.length;i++){
+            $("input[data-playername='" + playerArray[i].playerName + "']").val(playerArray[i].dollars);           
+        }
+        //Clear #dollarsAddSubtract
+        $("#dollarsAddSubtract").val("");
+
+        //Trigger the keyup handler on #dollarsAddSubtract to disable Add $ and Subtract $ buttons
+        $("#dollarsAddSubtract").keyup();
+        
+        //Save the game data to the cookie
+        savePlayerData();
+    }
 })
 
 var playerArray = new Array();

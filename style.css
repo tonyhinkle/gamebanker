@@ -110,7 +110,7 @@ td{
     overflow: hidden;
 }
 
-.draggable, .droppable{
+.playerName {
     display: inline;
 }
 
