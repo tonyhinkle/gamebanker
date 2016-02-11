@@ -41,8 +41,8 @@ $(document).ready(function ($) {
     
     //Register the click event for the "Clear" buttons
     $(document).on("click", "#buttonClear", function(){
-        //Clear the current text input        
-        $("#dollarsAddSubtract").val("");
+        //Clear the current text input and trigger the keyup handler to disable the Add $ and Subtract $ buttons
+        $("#dollarsAddSubtract").val("").keyup();
     });
 
     $("#btnCreatePlayer").on("click", function(){
@@ -79,7 +79,6 @@ $(document).ready(function ($) {
         
         //Disable #btnCreatePlayer.  The keyup handler will enable it when valid data is input
         $("#btnCreatePlayer").attr("disabled", "disabled");
-        
         $("#newPlayer").focus();
         return false;
     });
@@ -207,12 +206,10 @@ $(document).ready(function ($) {
     $("#startingAmount").on("keyup", function(){
         if($.isNumeric($("#startingAmount").val())){
             //If #startingAmount contains a number, enable the start button and make it opaque
-            $("#btnStartGame").removeAttr("disabled");
-            $("#btnStartGame").css("opacity", "1")
+            $("#btnStartGame").removeAttr("disabled").css("opacity", "1");
         }else{
             //If #startingAmount does not contain a number, disable the start button and make it half opaque
-            $("#btnStartGame").attr("disabled", "disabled");
-            $("#btnStartGame").css("opacity", ".5")
+            $("#btnStartGame").attr("disabled", "disabled").css("opacity", ".5");
         }
     });
     
@@ -311,14 +308,12 @@ $(document).ready(function ($) {
     });
     
     function updatePlayerDollars(){
+        //Loop through the player objects in the array and update all of them
         for(var i=0;i<playerArray.length;i++){
             $("input[data-playername='" + playerArray[i].playerName + "']").val(playerArray[i].dollars);           
         }
-        //Clear #dollarsAddSubtract
-        $("#dollarsAddSubtract").val("");
-
-        //Trigger the keyup handler on #dollarsAddSubtract to disable Add $ and Subtract $ buttons
-        $("#dollarsAddSubtract").keyup();
+        //Clear #dollarsAddSubtract and trigger the keyup handler disable Add $ and Subtract $ buttons
+        $("#dollarsAddSubtract").val("").keyup();
         
         //Save the game data to the cookie
         savePlayerData();
