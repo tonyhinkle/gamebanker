@@ -13,7 +13,7 @@ $(document).ready(function ($) {
         
         //Get the player's current amount of money, and initialize some other variables
         var playerAmount = currentPlayer.dollars;
-        var amountChange;
+        var amountChange = 0;
         var opColorOpenTag = spanGreenOpenTag;
 
         //If the "Add $200" button was clicked, set amountChanged to 200
@@ -87,39 +87,32 @@ $(document).ready(function ($) {
     //Register the click handler for #btnStartGame
     $("#btnStartGame").on("click", function(){
         
-        //If there is no playerdata cookie, process items for a new game setup
-        if (!($.cookie("playerdata"))){
-        
-            //If #startingAmount is not valid, disable the button, show the tooltip, and abort
-            //This will only be hit if the user highlights the input with mouse and cuts, 
-            //deletes, or pastes non-numerical data into it
-            if(!$.isNumeric($("#startingAmount").val())){
-                $("#startingAmount").tooltip("show");
-                $("#btnStartGame").attr("disabled", "disabled").css("opacity", ".5");
-                return;
-            }
+        //If #startingAmount is not valid, disable the button, show the tooltip, and abort
+        //This will only be hit if the user highlights the input with mouse and cuts, 
+        //deletes, or pastes non-numerical data into it
+        if(!$.isNumeric($("#startingAmount").val())){
+            $("#startingAmount").tooltip("show");
+            $("#btnStartGame").attr("disabled", "disabled").css("opacity", ".5");
+            return;
+        }
 
-            //Add the starting amount to each player
-            for(var i=0;i<playerArray.length;i++){
-                playerArray[i].dollars = $("#startingAmount").val();
-            }
+        //Add the starting amount to each player
+        for(var i=0;i<playerArray.length;i++){
+            playerArray[i].dollars = $("#startingAmount").val();
+        }
 
-            //Create the "Board" player to track "Free Parking"  money
-            if($("#checkboxBoardPlayer").is(":checked")){
-                var newPlayer = new player($("#inputBoardPlayer").val(), 0);
-                playerArray.push(newPlayer);
-            }
-            
-            //Store the defaultgame cookie with this setup if #defaultGameCheckbox was checked
-            if($("#defaultGameCheckbox").is(":checked")){
-                $.cookie("defaultgame", JSON.stringify(playerArray), {expires: 365});
-                $("#defaultGameCheckbox").prop("checked", false);
-            }
-            
-        } else {
-            //If there is a "playerdata" cookie, put that data into playerArray
-            playerDataFromCookie("playerdata");
-        };
+        //Create the "Board" player to track "Free Parking"  money
+        if($("#checkboxBoardPlayer").is(":checked")){
+            var newPlayer = new player($("#inputBoardPlayer").val(), 0);
+            playerArray.push(newPlayer);
+        }
+
+        //Store the defaultgame cookie with this setup if #defaultGameCheckbox was checked
+        if($("#defaultGameCheckbox").is(":checked")){
+            $.cookie("defaultgame", JSON.stringify(playerArray), {expires: 365});
+            $("#defaultGameCheckbox").prop("checked", false);
+        }
+    
         startGame();
     });
     
@@ -131,6 +124,7 @@ $(document).ready(function ($) {
             var p = new player(tempArray[i].playerName, tempArray[i].dollars);
             playerArray.push(p);
         }
+        startGame();
     }
 
     function startGame(){
@@ -222,18 +216,12 @@ $(document).ready(function ($) {
         }
     });
     
-    //Register the button that disables tooltips
-    $("#btnDisableTooltips").on("click", function(){
-        $('[data-toggle=tooltip]').tooltip("disable");
-        $("#btnDisableTooltips").hide();
-    });
-    
     function savePlayerData(){
         $.cookie("playerdata", JSON.stringify(playerArray), {expires: 365});
     }
     
     if($.cookie("playerdata")){
-        $("#btnStartGame").trigger("click");
+        playerDataFromCookie("playerdata");
     }
     
     $("#buttonNewGameConfirm").on("click", function(){
@@ -259,7 +247,7 @@ $(document).ready(function ($) {
             
             var amount = parseInt($("#dollarsAddSubtract").val());
             
-            playerFrom.dollarsAddSubtract(-(amount));
+            playerFrom.dollarsAddSubtract(-amount);
             currentPlayer.dollarsAddSubtract(amount);
             
             //Log the action and clear all .dollarsAddSubtract elements
@@ -274,7 +262,7 @@ $(document).ready(function ($) {
         $("#btnStartDefaultGame").removeClass("invisible");
         
         //Set the tooltip to show the default game players
-        var defaultGameText = "";
+        var defaultGameText = "Default game is:\n";
         var defaultGameArray = $.parseJSON($.cookie("defaultgame"));
         
         for(var i=0; i<defaultGameArray.length;i++){
@@ -287,7 +275,6 @@ $(document).ready(function ($) {
 
     $("#btnStartDefaultGame").on("click", function (){
         playerDataFromCookie("defaultgame");
-        startGame();
         return false;
     });
     
