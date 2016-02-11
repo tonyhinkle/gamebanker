@@ -12,7 +12,6 @@ $(document).ready(function ($) {
     $(document).on("click", "#buttonAddMoney, #buttonSubtractMoney, #buttonAdd200", function(){
         
         //Get the player's current amount of money, and initialize some other variables
-        var playerAmount = currentPlayer.dollars;
         var amountChange = 0;
         var opColorOpenTag = spanGreenOpenTag;
 
@@ -24,7 +23,7 @@ $(document).ready(function ($) {
             //If an Add $ or Subtract $ button was clicked, set amountChanged to the appropriate input value
             amountChange = parseInt($("#dollarsAddSubtract").val());
             
-            //If Subtract $ was clicked, change it to a negative number and change some other variables
+            //If Subtract $ was clicked, change it to a negative number and swap the opColorOpenTag
             if ($(this).attr("id") == "buttonSubtractMoney"){
                 amountChange = -amountChange
                 opColorOpenTag = spanRedOpenTag;
@@ -56,12 +55,10 @@ $(document).ready(function ($) {
         
         //Create the new player object and add it to the newPlayer array
         var newPlayer = new player($("#newPlayer").val(), 0);
-        playerArray.push(newPlayer);
-        $("#newPlayer").val("");
         
+        //Build the list of players
         var newPlayerListHtml = "";
         
-        //Build a list of players
         $.each(playerArray, function( index, value ) {
             newPlayerListHtml += value.playerName + "<br>";
         });
@@ -71,10 +68,7 @@ $(document).ready(function ($) {
         
         //If it is the second player to be added, show the .startGameElement elements
         if(playerArray.length == 2){
-            $(".startGameElement").removeClass("invisible")
-                                  .hide()
-                                  .fadeIn(800)
-                                  .removeAttr("disabled");
+            $(".startGameElement").removeClass("invisible").hide().fadeIn(800).removeAttr("disabled");
         }
         
         //Disable #btnCreatePlayer.  The keyup handler will enable it when valid data is input
@@ -97,13 +91,12 @@ $(document).ready(function ($) {
 
         //Add the starting amount to each player
         for(var i=0;i<playerArray.length;i++){
-            playerArray[i].dollars = $("#startingAmount").val();
+            playerArray[i].dollars = parseInt($("#startingAmount").val());
         }
 
         //Create the "Board" player to track "Free Parking"  money
         if($("#checkboxBoardPlayer").is(":checked")){
             var newPlayer = new player($("#inputBoardPlayer").val(), 0);
-            playerArray.push(newPlayer);
         }
 
         //Store the defaultgame cookie with this setup if #defaultGameCheckbox was checked
@@ -121,7 +114,6 @@ $(document).ready(function ($) {
 
         for(var i=0;i<tempArray.length;i++){
             var p = new player(tempArray[i].playerName, tempArray[i].dollars);
-            playerArray.push(p);
         }
         startGame();
     }
@@ -161,7 +153,7 @@ $(document).ready(function ($) {
     //Register the click event for the .bill DIVs
     //TODO: Use .isNumeric
     $(document).on("click", ".bill", function(){
-        if(parseInt($("#dollarsAddSubtract").val())){
+        if($.isNumeric($("#dollarsAddSubtract").val())){
             //If there is already a number there, add the DIVs bill value to it
             $("#dollarsAddSubtract").val(parseInt($("#dollarsAddSubtract").val()) + parseInt($(this).data("bill")));
         }else{
@@ -283,6 +275,7 @@ $(document).ready(function ($) {
         delay: { "show": 1000, "hide": 500 }
     });
     
+    // Show/hide .boardPlayerElement based on #checkboxBoardPlayer state
     $("#checkboxBoardPlayer").on("change", function() {
         if($("#checkboxBoardPlayer").is(":checked")){
             $(".boardPlayerElement").removeClass("invisible");
@@ -291,23 +284,29 @@ $(document).ready(function ($) {
         }
     });
 
+    //Regsiter the handler for the Delete Player button
     $("#buttonDeletePlayerConfirm").on("click", function (){
+        // Find the index of the player object in the playerArray
         for(var i=0;i<playerArray.length;i++){
             if(playerArray[i].playerName === currentPlayer.playerName){
                 break;
             }
         }
+        // Delete the object out of he array, and remove the player's UI elements
         playerArray.splice(i,1);
         $(".playerDiv[data-playername='" + currentPlayer.playerName + "']").remove()
         $(".playerDiv").eq(0).click();
         savePlayerData();
     });
     
+    // Add the text to the modal for player delete confirmation
     $("#modalDeletePlayerConfirm").on("shown.bs.modal", function (){
         $("#divDeletePlayerConfirmBody").html("Are you sure you want to delete " + currentPlayer.playerName + "?");
     });
     
+    // Add/subtract to/from a player's dollars 
     function updatePlayerDollars(){
+        
         //Loop through the player objects in the array and update all of them
         for(var i=0;i<playerArray.length;i++){
             $("input[data-playername='" + playerArray[i].playerName + "']").val(playerArray[i].dollars);           
@@ -319,6 +318,7 @@ $(document).ready(function ($) {
         savePlayerData();
     }
 
+    // Define the player object
     function player(name, dol) {
         this.playerName = name;
         this.dollars = dol;
@@ -326,6 +326,9 @@ $(document).ready(function ($) {
             this.dollars = parseInt(this.dollars) + parseInt(val);
             updatePlayerDollars();
         }
+        // Add the object to playerArray and clear the #newPlayer input
+        playerArray.push(this);
+        $("#newPlayer").val("");
     }
 })
 
