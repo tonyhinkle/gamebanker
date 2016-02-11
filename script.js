@@ -1,10 +1,10 @@
 $(document).ready(function ($) {
     
     //Create global variables
-    var spanGreenOpenTag = "<span class='colorGreen'>";
-    var spanRedOpenTag = "<span class='colorRed'>";
+    var spanGreenOpenTag = "<span class='colorGreen'>+";
+    var spanRedOpenTag = "<span class='colorRed'>-";
     var spanCloseTag = "</span>";
-
+    
     //Set focus on the #newPlayer input
     $("#newPlayer").focus();
     
@@ -14,7 +14,6 @@ $(document).ready(function ($) {
         //Get the player's current amount of money, and initialize some other variables
         var playerAmount = currentPlayer.dollars;
         var amountChange;
-        var operation = "+";
         var opColorOpenTag = spanGreenOpenTag;
 
         //If the "Add $200" button was clicked, set amountChanged to 200
@@ -28,17 +27,15 @@ $(document).ready(function ($) {
             //If Subtract $ was clicked, change it to a negative number and change some other variables
             if ($(this).attr("id") == "buttonSubtractMoney"){
                 amountChange = -amountChange
-                operation = "-";
                 opColorOpenTag = spanRedOpenTag;
             }
         }
         
         //Add amountChange to the player's current amount of $
-        currentPlayer.dollars = parseInt(currentPlayer.dollars) + parseInt(amountChange);
-        updatePlayerDollars();
+        currentPlayer.dollarsAddSubtract(parseInt(amountChange))
         
         //Add the transaction to the activity log
-        $("#activityLog").prepend(currentPlayer.playerName + ": " + opColorOpenTag + operation 
+        $("#activityLog").prepend(currentPlayer.playerName + ": " + opColorOpenTag
                  + "$" + Math.abs(amountChange) + spanCloseTag + "<br>");
     });
     
@@ -49,7 +46,6 @@ $(document).ready(function ($) {
     });
 
     $("#btnCreatePlayer").on("click", function(){
-        
         //If the user deleted the data in #newPlayer before clicking the button,
         //show the #newPlayer tooltip and return
         if($("#newPlayer").val() === ""){
@@ -59,9 +55,7 @@ $(document).ready(function ($) {
         }
         
         //Create the new player object and add it to the newPlayer array
-        var newPlayer = new Object();
-        newPlayer.playerName = $("#newPlayer").val();
-        newPlayer.dollars = 0;
+        var newPlayer = new player($("#newPlayer").val(), 0);
         playerArray.push(newPlayer);
         $("#newPlayer").val("");
         
@@ -112,9 +106,7 @@ $(document).ready(function ($) {
 
             //Create the "Board" player to track "Free Parking"  money
             if($("#checkboxBoardPlayer").is(":checked")){
-                var newPlayer = new Object();
-                newPlayer.playerName = $("#inputBoardPlayer").val();
-                newPlayer.dollars = 0;
+                var newPlayer = new player($("#inputBoardPlayer").val(), 0);
                 playerArray.push(newPlayer);
             }
             
@@ -125,11 +117,21 @@ $(document).ready(function ($) {
             }
             
         } else {
-            //If there is a cookie, put that data into playerArray
-            playerArray = $.parseJSON($.cookie("playerdata"));
+            //If there is a "playerdata" cookie, put that data into playerArray
+            playerDataFromCookie("playerdata");
         };
         startGame();
     });
+    
+    function playerDataFromCookie(c){
+        var tempArray = [];
+        tempArray = $.parseJSON($.cookie(c));
+
+        for(var i=0;i<tempArray.length;i++){
+            var p = new player(tempArray[i].playerName, tempArray[i].dollars);
+            playerArray.push(p);
+        }
+    }
 
     function startGame(){
         
@@ -248,24 +250,22 @@ $(document).ready(function ($) {
         //If the same player was clicked, do nothing
         if(currentPlayer === playerFrom) return;
         
-        //Remove highligh from all players, then highlight the player that was clicked on 
+        //Remove highlight from all players, then highlight the player that was clicked on 
         $(".playerDiv").children().addBack().css("background-color", "#FAFAFA").css("color", "#888888");
         $(this).children().addBack().css("background-color", "#86C98A").css("color", "white");
 
         //if there is a number in #dollarsAddSubtract, treat the action as a transfer
         if($.isNumeric($("#dollarsAddSubtract").val())){
-            //show the modal for confirmation
             
             var amount = parseInt($("#dollarsAddSubtract").val());
             
-            playerFrom.dollars = parseInt(playerFrom.dollars) - amount;
-            currentPlayer.dollars = parseInt(currentPlayer.dollars) + amount;
+            playerFrom.dollarsAddSubtract(-(amount));
+            currentPlayer.dollarsAddSubtract(amount);
             
             //Log the action and clear all .dollarsAddSubtract elements
             $("#activityLog").prepend("$" + amount + " from " + spanRedOpenTag + playerFrom.playerName
                       + spanCloseTag + " to " + spanGreenOpenTag + currentPlayer.playerName + spanCloseTag + "<br>");
 
-            updatePlayerDollars();
         }
     });
  
@@ -286,7 +286,7 @@ $(document).ready(function ($) {
     }
 
     $("#btnStartDefaultGame").on("click", function (){
-        playerArray = $.parseJSON($.cookie("defaultgame"));
+        playerDataFromCookie("defaultgame");
         startGame();
         return false;
     });
@@ -335,6 +335,15 @@ $(document).ready(function ($) {
         
         //Save the game data to the cookie
         savePlayerData();
+    }
+
+    function player(name, dol) {
+        this.playerName = name;
+        this.dollars = dol;
+        this.dollarsAddSubtract = function(val){
+            this.dollars = parseInt(this.dollars) + parseInt(val);
+            updatePlayerDollars();
+        }
     }
 })
 
