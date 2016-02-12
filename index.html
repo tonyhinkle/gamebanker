@@ -1,4 +1,4 @@
-<head>
+<html lang="en" xml:lang="en" xmlns= "http://www.w3.org/1999/xhtml">
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
     <script>$.widget.bridge('uitooltip', $.ui.tooltip);</script>
@@ -11,6 +11,7 @@
     <script src="script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="google" content="notranslate">
 </head>
 <body>
 
@@ -31,24 +32,26 @@
                         <label id="startingAmountLabel" class="col-sm-3 nopadding startGameElement invisible control-label" for="startingAmount">Starting Amount:&nbsp;</label>
                         <div class="col-sm-9">
                             <input id="startingAmount" type="number" disabled class="startGameElement form-control invisible" value="1630" title="A valid number must be entered to start the game.">
-                            <br>
+                        </div>
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-9">
                             <div class="checkbox invisible startGameElement">
-                                <label>
-                                    <input id="defaultGameCheckbox" type="checkbox">
-                                    Set as default game
+                                <label id="labelCheckboxDefaultGame" class="checkbox">
+                                    <input id="defaultGameCheckbox" type="checkbox">    
+                                    <span>Set as default game</span>
                                 </label>
                             </div>
                         </div>
                         <div class="col-sm-3"></div>
                         <div class="col-sm-9">
                             <div class="checkbox invisible startGameElement">
-                                <label id="labelCheckboxBoardPlayer">
-                                    <input id="checkboxBoardPlayer" type="checkbox">
-                                    Create board player
+                                <label id="labelCheckboxBoardPlayer" class="checkbox">
+                                    <input id="checkboxBoardPlayer" type="checkbox">    
+                                    <span>Create board player</span>
                                 </label>
                             </div>
                         </div>
-                        <label id="labelBoardPlayer" class="boardPlayerElement col-sm-3 nopadding control-label invisible" for="boardPlayer">Board Player:&nbsp;</label>
+                        <label id="labelBoardPlayer" class="col-sm-3 boardPlayerElement nopadding control-label invisible" for="boardPlayer">Board Player:&nbsp;</label>
                         <div class="col-sm-9">
                                 <input id="inputBoardPlayer" class="boardPlayerElement form-control invisible" value="Board" data-toggle="tooltip" title='Use this "player" for games that have a pot that accumulates money until a player wins the pot.'>
                         </div>

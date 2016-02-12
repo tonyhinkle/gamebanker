@@ -5,8 +5,9 @@ $(document).ready(function ($) {
     var spanRedOpenTag = "<span class='colorRed'>-";
     var spanCloseTag = "</span>";
     
-    //Set focus on the #newPlayer input
+    //Prepare UI elements
     $("#newPlayer").focus();
+    $("#checkboxBoardPlayer, #defaultGameCheckbox").prop( "checked", false );
     
     //Register the click event for the buttons to add and subtract money
     $(document).on("click", "#buttonAddMoney, #buttonSubtractMoney, #buttonAdd200", function(){

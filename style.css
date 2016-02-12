@@ -233,14 +233,10 @@ label {
     white-space: pre-line;
 }
 
-#labelCheckboxBoardPlayer, #checkboxBoardPlayer {
-    padding-top: 10px;
-    padding-bottom: 5px;
-}
-
 #btnStartGame, #btnStartDefaultGame {
     margin-top: 10px;
     margin-right: 10px;
+    margin-left: 6px;
 }
 
 #tdDeletePlayerButtonCell {
@@ -256,6 +252,7 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
-div {
-    
+
+#inputBoardPlayer, #labelBoardPlayer {
+    margin-top: 10px;
 }
