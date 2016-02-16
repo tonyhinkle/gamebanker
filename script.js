@@ -264,6 +264,7 @@ $(document).ready(function ($) {
     }
 
     $("#btnStartDefaultGame").on("click", function (){
+        playerArray = [];
         playerDataFromCookie("defaultgame");
         return false;
     });
